@@ -1,43 +1,51 @@
 <script>
-    import { MediaItem } from '$lib/models/MediaItem';
+  // @ts-nocheck
 
-    let items = [
-        new MediaItem("Titel 1", "https://via.placeholder.com/50", "2023-01-01"),
-        new MediaItem("Titel 2", "https://via.placeholder.com/50", "2023-02-01")
-    ];
+  //import { MediaItem } from "$lib/models/MediaItem";
+
+  let { items } = $props();
 </script>
 
 <div class="media-list">
-    {#each items as item}
-        <div class="media-item">
-            <img src={item.imageUrl} alt={item.title} />
-            <div>
-                <h3>{item.title}</h3>
-                <p>{item.createdAt}</p>
-            </div>
-            <div class="options-icon">⋮</div>
+  {#each items as item, id (id)}
+    <div class="media-item-wrap">
+      <div class={`media-item media-item-${id}`}>
+        <img src={item.imageUrl} alt={item.title} />
+        <div class="media-item-content">
+          <h3>{item.title}</h3>
+          <p>{item.createdAt}</p>
         </div>
-    {/each}
+      </div>
+      <button class="btn options-icon">⋮</button>
+    </div>
+  {/each}
 </div>
 
 <style>
-    .media-list {
-        display: flex;
-        flex-direction: column;
-    }
-    .media-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px;
-        border-bottom: 1px solid #ccc;
-    }
-    img {
-        width: 50px;
-        height: 50px;
-        margin-right: 10px;
-    }
-    .options-icon {
-        cursor: pointer;
-    }
+  .media-list {
+    display: flex;
+    flex-direction: column;
+  }
+  .media-item-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  .media-item {
+    display: flex;
+    align-items: center;
+  }
+  img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+  }
+  .btn {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    font-size: 1.25rem;
+  }
 </style>
