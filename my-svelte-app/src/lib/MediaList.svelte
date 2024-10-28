@@ -3,11 +3,13 @@
 
   //import { MediaItem } from "$lib/models/MediaItem";
 
-  let { items } = $props();
+  //let { items } = $props();
+  import { items } from '$lib/mediaStore.js';
+
 </script>
 
 <div class="media-list">
-  {#each items as item, id (id)}
+  {#each $items as item, id (id)}
     <div class="media-item-wrap">
       <div class={`media-item media-item-${id}`}>
         <img src={item.imageUrl} alt={item.title} />

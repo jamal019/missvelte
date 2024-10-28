@@ -2,29 +2,11 @@
   import Footer from "$lib/Footer.svelte";
   import Header from "$lib/Header.svelte";
   import MediaList from "$lib/MediaList.svelte";
-  import { MediaItem } from "$lib/models/MediaItem";
-
-  let items = [
-    new MediaItem("Titel 1", "https://picsum.photos/100/100", "2024-01-01"),
-  ];
-
-  let addNewMedia = () => {
-    const randomImgId = Math.floor(Math.random() * 1000);
-    const newMediaItem = new MediaItem(
-      `Titel ${items.length + 1}`,
-      `https://picsum.photos/100/100?random=${randomImgId}`,
-      Date.now().toString()
-    );
-    //push new MediaItem to items list
-    items = [...items, newMediaItem];
-  };
 </script>
 
-<header>
-  <Header addMedia={addNewMedia} />
-</header>
+<Header />
 <main>
-  <MediaList {items} />
+  <MediaList />
 </main>
 <Footer />
 
