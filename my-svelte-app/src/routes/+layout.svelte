@@ -17,8 +17,9 @@
     box-sizing: border-box;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
-  :global(h1, h2, h3, p) {
+  :global(h1, h2, h3, p, button) {
     margin: 0;
+    text-align: left;
   }
   main {
     margin: 2.5rem 0 5rem 0;

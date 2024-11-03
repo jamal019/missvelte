@@ -54,6 +54,7 @@
     align-items: center;
     padding: 10px;
     background-color: #f5f5f5;
+    height: 5vh;
   }
   .btn {
     cursor: pointer;
