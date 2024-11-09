@@ -3,18 +3,31 @@ import { writable } from 'svelte/store';
 import { MediaItem } from '$lib/models/MediaItem';
 
 export const items = writable([
-  new MediaItem("Titel 1", "https://picsum.photos/100/100", "2024-01-01"),
+  new MediaItem("Titel 1", "https://picsum.photos/100/100", "01.06.2024"),
 ]);
 
+export const itemTitle = writable("");
+
+
 export function addNewMedia() {
-    console.log("ADD");
+
+  /**
+   * @type {string}
+   */
+  let titleValue = "";
+  itemTitle.subscribe((value) => {
+    titleValue = value;
+  })();
+  //don't add if empty
+  //if (titleValue.trim() === "") return;
+
   const randomImgId = Math.floor(Math.random() * 1000);
   items.update(currentItems => [
     ...currentItems,
     new MediaItem(
-      `Titel ${currentItems.length + 1}`,
+      titleValue,
       `https://picsum.photos/100/100?random=${randomImgId}`,
-      Date.now().toString()
+      new Date().toLocaleDateString("de-DE")
     )
   ]);
 }

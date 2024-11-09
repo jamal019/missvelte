@@ -1,11 +1,14 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  import { addNewMedia } from "$lib/mediaStore.js";
+  import { addNewMedia, itemTitle } from "$lib/mediaStore.js";
 
   import { slide } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
   import Dialog from "./Dialog.svelte";
+
+  //new media title
+  let newTitle = $state("");
 
   //Toggle Burger Menu
   let showMenu = $state(false);
@@ -37,8 +40,10 @@
 
   //'add new media' handler
   function handleAddNewMedia() {
+    itemTitle.set(newTitle);
     addNewMedia();
     closeDialog();
+    newTitle = "";
   }
 </script>
 
@@ -70,7 +75,7 @@
 <!--show Add New Dialog-->
 {#if showDialog}
   <Dialog title="New Media" isOpen={showDialog} {closeDialog}>
-    <input type="text" placeholder="Name" id="newItem" />
+    <input bind:value={newTitle} type="text" placeholder="Name" id="newItem" />
     <button class="btn action-btn btn-add" onclick={handleAddNewMedia}
       >Add New</button
     >
