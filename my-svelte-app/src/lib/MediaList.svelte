@@ -52,8 +52,8 @@
 <!--show Edit Dialog-->
 {#if showDialog}
   <Dialog title={selectedItem.title} isOpen={showDialog} {closeDialog}>
-    <button class="btn action-btn">Delete</button>
-    <button class="btn action-btn">Edit</button>
+    <button class="btn action-btn del">Delete</button>
+    <button class="btn action-btn edit">Edit</button>
   </Dialog>
 {/if}
 

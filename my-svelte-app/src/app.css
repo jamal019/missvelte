@@ -1,0 +1,65 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h1,
+h2,
+h3,
+p,
+button {
+  margin: 0;
+  text-align: left;
+}
+
+main {
+  margin: 2.5rem 0 5rem 0;
+}
+
+/*COLORS*/
+.red-bg {
+  background-color: #e93f33;
+  color: white;
+}
+
+/*Burger Menu*/
+.burger-menu {
+  position: absolute;
+  top: 0;
+  width: 90vw;
+  height: 100vh;
+  z-index: 99;
+}
+@media screen and (min-width: 900px) {
+    .burger-menu{
+        width: 40vw;
+    }
+}
+.burger-menu .menu-wrapper {
+  padding: 2rem 1rem;
+}
+.burger-menu ul {
+  padding: 0;
+}
+.burger-menu a {
+    color: #1c1c1c;
+    text-decoration: none;
+  }
+.burger-menu li {
+  list-style: none;
+  background-color: white;
+  color: #e93f33;
+  padding: 1rem 0.5rem;
+  font-weight: bold;
+  border-bottom: 2px solid #e93f33;
+}
+
+/*Buttons*/
+.btn {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  font-size: 1.25rem;
+}
