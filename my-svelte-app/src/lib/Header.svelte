@@ -30,14 +30,15 @@
   function openDialog() {
     showDialog = true;
   }
+
   function closeDialog() {
     showDialog = false;
   }
 
   //'add new media' handler
   function handleAddNewMedia() {
-    addNewMedia(); 
-    closeDialog(); 
+    addNewMedia();
+    closeDialog();
   }
 </script>
 
@@ -59,7 +60,7 @@
       <nav>
         <ul>
           <li><a href="/">Media</a></li>
-          <li><a href="/">Map</a></li>
+          <li><a href="/map">Map</a></li>
         </ul>
       </nav>
     </div>
@@ -70,7 +71,9 @@
 {#if showDialog}
   <Dialog title="New Media" isOpen={showDialog} {closeDialog}>
     <input type="text" placeholder="Name" id="newItem" />
-    <button class="btn action-btn btn-add" onclick={handleAddNewMedia}>Add New</button>
+    <button class="btn action-btn btn-add" onclick={handleAddNewMedia}
+      >Add New</button
+    >
   </Dialog>
 {/if}
 
