@@ -33,9 +33,9 @@ main {
   z-index: 99;
 }
 @media screen and (min-width: 900px) {
-    .burger-menu{
-        width: 40vw;
-    }
+  .burger-menu {
+    width: 40vw;
+  }
 }
 .burger-menu .menu-wrapper {
   padding: 2rem 1rem;
@@ -44,9 +44,9 @@ main {
   padding: 0;
 }
 .burger-menu a {
-    color: #1c1c1c;
-    text-decoration: none;
-  }
+  color: #1c1c1c;
+  text-decoration: none;
+}
 .burger-menu li {
   list-style: none;
   background-color: white;
@@ -62,4 +62,28 @@ main {
   border: none;
   background-color: transparent;
   font-size: 1.25rem;
+  text-align: center;
+}
+.action-btn {
+  padding: 1rem;
+}
+.btn-del {
+  background-color: #e93f33;
+  color: white;
+}
+.btn-edit {
+  background-color: #fff;
+  color: #e93f33;
+}
+.btn-add {
+  background-color: #62965a;
+  color: white;
+}
+
+/*Input*/
+input {
+  padding: .5rem;
+  margin: 1rem;
+  border: none;
+  border-bottom: 2px solid #62965a;
 }

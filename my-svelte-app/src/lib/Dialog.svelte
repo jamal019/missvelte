@@ -4,16 +4,22 @@
 
 let  { children, title, isOpen, closeDialog }  = $props();
 
+import { fade } from "svelte/transition";
+
 </script>
 
 
 {#if isOpen}
-<div class="overlay" onclick={closeDialog}></div>
-<div class="dialog">
-    <h2>{title}</h2>
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div class="overlay" aria-label="overlay" onclick={closeDialog}></div>
+<div class="dialog" transition:fade>
+    <h2 class="dialog-title">{title}</h2>
     <!-- <input class="edit-input" type="text" /> -->
   <div class="actions-btns">
+    {#if children}
     {@render children()}
+    {/if}
   </div>
 </div>    
 {/if}
@@ -27,24 +33,28 @@ let  { children, title, isOpen, closeDialog }  = $props();
     background-color: rgba(0, 0, 0, 0.9);
 }
 .dialog {
-    max-width: 70vw;
+    max-width: 85vw;
     height: max-content;
     position: absolute;
     left: 0;
     right: 0;
     top: 10vh;
     margin: auto;
-    border-radius: 6px;
-    background-color: #ffffff;
+    background-color: #fff;
+}
+@media screen and (min-width: 900px){
+  .dialog{
+    max-width: 40vw;
+  }
+}
+.dialog-title{
+  padding: 1rem;
 }
 .actions-btns{
   display: flex;
   flex-flow: column wrap;
 }
-h2{
-  padding: 1rem;
-}
-input{
+/* input{
     margin: 0.5rem 0;
-}
+} */
 </style>

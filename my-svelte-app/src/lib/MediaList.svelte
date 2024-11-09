@@ -5,8 +5,8 @@
   //import Details from "./Details.svelte";
   import Dialog from "./Dialog.svelte";
 
-  let showDialog = false;
-  let selectedItem = null;
+  let showDialog = $state(false);
+  let selectedItem = $state(null);
 
   //let detailsItem = false;
 
@@ -52,8 +52,8 @@
 <!--show Edit Dialog-->
 {#if showDialog}
   <Dialog title={selectedItem.title} isOpen={showDialog} {closeDialog}>
-    <button class="btn action-btn del">Delete</button>
-    <button class="btn action-btn edit">Edit</button>
+    <button class="btn action-btn btn-edit">Edit</button>
+    <button class="btn action-btn btn-del">Delete</button>
   </Dialog>
 {/if}
 
@@ -86,15 +86,8 @@
     height: 50px;
     margin-right: 10px;
   }
-  .btn {
-    cursor: pointer;
-    border: none;
-    background-color: transparent;
-    font-size: 1.25rem;
-  }
-  .action-btn{
-    padding: 1rem;
-  }
+
+
   .details-view{
     position: absolute;
     background-color: white;
