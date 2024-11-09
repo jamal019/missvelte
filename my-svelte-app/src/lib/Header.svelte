@@ -58,8 +58,8 @@
       <h2>Menü</h2>
       <nav>
         <ul>
-          <li><a href="/">List Ansicht</a></li>
-          <li><a href="/">Map Ansicht</a></li>
+          <li><a href="/">Media</a></li>
+          <li><a href="/">Map</a></li>
         </ul>
       </nav>
     </div>
