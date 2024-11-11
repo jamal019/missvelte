@@ -57,6 +57,14 @@ main {
 }
 
 /*Buttons*/
+.icon{
+  color: #fff;
+}
+.icon-red{
+  font-weight: bold;
+  font-size: 1.5rem !important;
+  color: #e93f33;
+}
 .btn {
   cursor: pointer;
   border: none;

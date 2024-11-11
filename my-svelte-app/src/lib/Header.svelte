@@ -49,9 +49,9 @@
 
 <!--Header-->
 <header class="red-bg">
-  <button class="btn menu-icon" onclick={toggleMenu}>☰</button>
+  <button class="btn menu-icon icon" onclick={toggleMenu}>☰</button>
   <h1>Medien</h1>
-  <button class="btn add-icon" onclick={openDialog}>+</button>
+  <button class="btn add-icon icon" onclick={openDialog}>+</button>
 </header>
 
 <!--Show Burger Menu-->

@@ -2,25 +2,41 @@
   // @ts-nocheck
 
   import { items } from "$lib/mediaStore.js";
-  //import Details from "./Details.svelte";
   import Dialog from "./Dialog.svelte";
 
   let showDialog = $state(false);
   let selectedItem = $state(null);
-
-  //let detailsItem = false;
+  let dialogMode = $state("view"); // "view" or "edit"
 
   function openDialog(item) {
     selectedItem = item;
     showDialog = true;
+    dialogMode = "view";
   }
 
   function closeDialog() {
     showDialog = false;
     selectedItem = null;
+    dialogMode = "view";
   }
 
-  // function showDetail(item) {
+  function openEditDialog() {
+    dialogMode = "edit";
+  }
+
+  //Edit Item Title
+  function editTitle() {
+    console.log("EDITED:", selectedItem.title);
+    closeDialog();
+  }
+
+  // Delete Item
+  function deleteItem() {
+    console.log("DELETED:", selectedItem.title);
+    //closeDialog();
+  }
+
+   // function showDetail(item) {
   //   console.log("x", detailsItem, item);
   //   selectedItem = item;
   //   detailsItem = true;
@@ -30,34 +46,43 @@
 <div class="media-list">
   {#each $items as item, id (id)}
     <div class="media-item-wrap">
-      <div
-        class={`media-item media-item-${id}`}
-      >
+      <div class={`media-item media-item-${id}`}>
         <img src={item.imageUrl} alt={item.title} />
         <div class="media-item-content">
           <h3>{item.title}</h3>
           <p>{item.createdAt}</p>
         </div>
       </div>
-      <button
-        class="btn options-icon"
-        onclick={() => {
-          openDialog(item);
-        }}>⋮</button
-      >
+      <button class="btn options-icon icon-red" 
+        onclick={() => openDialog(item)}>⋮</button>
     </div>
   {/each}
 </div>
 
-<!--show Edit Dialog-->
+<!-- Dynamic Dialog -->
 {#if showDialog}
-  <Dialog title={selectedItem.title} isOpen={showDialog} {closeDialog}>
-    <button class="btn action-btn btn-edit">Edit</button>
-    <button class="btn action-btn btn-del">Delete</button>
+  <Dialog title={selectedItem?.title} isOpen={showDialog} {closeDialog}>
+    {#if dialogMode === "view"}
+      <!-- Edit or Delete -->
+      <button class="btn action-btn btn-edit" onclick={openEditDialog}>
+        Edit
+      </button>
+      <button class="btn action-btn btn-del" onclick={deleteItem}>
+        Delete
+      </button>
+    {:else if dialogMode === "edit"}
+      <!-- Edit Title -->
+      <input
+        type="text"
+        bind:value={selectedItem.title}
+        placeholder="Edit Title"
+      />
+      <button class="btn action-btn btn-add" onclick={editTitle}> Save </button>
+    {/if}
   </Dialog>
 {/if}
 
-<!--show Details Page-->
+<!--show Details Page/Modal-->
 <!-- {#if detailsItem}
   <div class="details-view">
     {selectedItem.title}
@@ -87,8 +112,7 @@
     margin-right: 10px;
   }
 
-
-  .details-view{
+  .details-view {
     position: absolute;
     background-color: white;
     top: 7.5vh;
