@@ -3,6 +3,7 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  min-height: 100vh;
 }
 
 h1,
@@ -74,6 +75,8 @@ main {
 }
 .action-btn {
   padding: 1rem;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
 .btn-del {
   background-color: #e93f33;

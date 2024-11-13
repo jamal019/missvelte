@@ -61,7 +61,7 @@
 
 <!-- Dynamic Dialog -->
 {#if showDialog}
-  <Dialog title={selectedItem?.title} isOpen={showDialog} {closeDialog}>
+  <Dialog title={selectedItem?.title}  {closeDialog}>
     {#if dialogMode === "view"}
       <!-- Edit or Delete -->
       <button class="btn action-btn btn-edit" onclick={openEditDialog}>

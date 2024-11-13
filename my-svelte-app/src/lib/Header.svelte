@@ -74,7 +74,7 @@
 
 <!--show Add New Dialog-->
 {#if showDialog}
-  <Dialog title="New Media" isOpen={showDialog} {closeDialog}>
+  <Dialog title="New Media" {closeDialog}>
     <input bind:value={newTitle} type="text" placeholder="Name" id="newItem" />
     <button class="btn action-btn btn-add" onclick={handleAddNewMedia}
       >Add New</button
