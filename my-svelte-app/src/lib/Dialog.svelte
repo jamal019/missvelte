@@ -1,6 +1,5 @@
 <!--Dialog Component-->
 <script>
-  // @ts-nocheck
 
   let { children, title, closeDialog } = $props();
 

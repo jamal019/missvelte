@@ -1,14 +1,13 @@
-<script>
-  // @ts-nocheck
-
+<script lang="ts">
   import { items } from "$lib/mediaStore.js";
   import Dialog from "./Dialog.svelte";
+  import type { MediaItem } from "./models/MediaItem";
 
   let showDialog = $state(false);
-  let selectedItem = $state(null);
-  let dialogMode = $state("view"); // "view" or "edit"
+  let selectedItem = $state<MediaItem | null>(null);
+  let dialogMode = $state<"view" | "edit">("view");
 
-  function openDialog(item) {
+  function openDialog(item: MediaItem) {
     selectedItem = item;
     showDialog = true;
     dialogMode = "view";
@@ -26,17 +25,17 @@
 
   //Edit Item Title
   function editTitle() {
-    console.log("EDITED:", selectedItem.title);
+    console.log("EDITED:", selectedItem?.title);
     closeDialog();
   }
 
   // Delete Item
   function deleteItem() {
-    console.log("DELETED:", selectedItem.title);
+    console.log("DELETED:", selectedItem?.title);
     //closeDialog();
   }
 
-   // function showDetail(item) {
+  // function showDetail(item) {
   //   console.log("x", detailsItem, item);
   //   selectedItem = item;
   //   detailsItem = true;
@@ -53,15 +52,16 @@
           <p>{item.createdAt}</p>
         </div>
       </div>
-      <button class="btn options-icon icon-red" 
-        onclick={() => openDialog(item)}>⋮</button>
+      <button class="btn options-icon icon-red" onclick={() => openDialog(item)}
+        >⋮</button
+      >
     </div>
   {/each}
 </div>
 
 <!-- Dynamic Dialog -->
 {#if showDialog}
-  <Dialog title={selectedItem?.title}  {closeDialog}>
+  <Dialog title={selectedItem?.title} {closeDialog}>
     {#if dialogMode === "view"}
       <!-- Edit or Delete -->
       <button class="btn action-btn btn-edit" onclick={openEditDialog}>
@@ -72,11 +72,14 @@
       </button>
     {:else if dialogMode === "edit"}
       <!-- Edit Title -->
-      <input
-        type="text"
-        bind:value={selectedItem.title}
-        placeholder="Edit Title"
-      />
+      {#if selectedItem}
+        <input
+          type="text"
+          bind:value={selectedItem.title}
+          placeholder="Edit Title"
+        />
+        <img src={selectedItem.imageUrl} alt="">
+      {/if}
       <button class="btn action-btn btn-add" onclick={editTitle}> Save </button>
     {/if}
   </Dialog>

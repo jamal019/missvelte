@@ -64,8 +64,8 @@
       <h2>Menü</h2>
       <nav>
         <ul>
-          <li><a href="/">Media</a></li>
-          <li><a href="/map">Map</a></li>
+          <a href="/"><li>Media</li></a>
+          <a href="/map"><li>Map</li></a>
         </ul>
       </nav>
     </div>

@@ -51,7 +51,7 @@ main {
 .burger-menu li {
   list-style: none;
   background-color: white;
-  color: #e93f33;
+  /*color: #e93f33;*/
   padding: 1rem 0.5rem;
   font-weight: bold;
   border-bottom: 2px solid #e93f33;

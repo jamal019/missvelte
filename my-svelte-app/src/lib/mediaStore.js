@@ -9,9 +9,7 @@ export const items = writable([
 export const itemTitle = writable("");
 
 export function addNewMedia() {
-  /**
-   * @type {string}
-   */
+
   let titleValue = "";
   itemTitle.subscribe((value) => {
     titleValue = value;
