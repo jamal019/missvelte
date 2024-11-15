@@ -68,8 +68,10 @@ if (typeof window !== "undefined") {
 }
 
 //CRUD Operations
-const addNewItem = () => {};
+const getAllItems = () => {};
 
-const deleteItem = () => {};
+export const addNewItem = () => {};
 
-const editItem = () => {};
+export const deleteItem = () => {};
+
+export const editItem = () => {};
