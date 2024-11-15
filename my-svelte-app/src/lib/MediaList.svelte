@@ -50,6 +50,7 @@
         <div class="media-item-content">
           <h3>{item.title}</h3>
           <p>{item.createdAt}</p>
+          <!-- <p>Location: {item.latitude} {item.longitude}</p> -->
         </div>
       </div>
       <button class="btn options-icon icon-red" onclick={() => openDialog(item)}
