@@ -1,13 +1,15 @@
-<script lang="ts">
-  import { items } from "$lib/mediaStore.js";
+<script>
+// @ts-nocheck
+
+  import { items, deleteItem, editItem} from "$lib/mediaStore.js";
   import Dialog from "./Dialog.svelte";
-  import type { MediaItem } from "./models/MediaItem";
+  //import type { MediaItem } from "./models/MediaItem";
 
   let showDialog = $state(false);
-  let selectedItem = $state<MediaItem | null>(null);
-  let dialogMode = $state<"view" | "edit">("view");
+  let selectedItem = $state(null);
+  let dialogMode = $state("view");
 
-  function openDialog(item: MediaItem) {
+  function openDialog(item) {
     selectedItem = item;
     showDialog = true;
     dialogMode = "view";
@@ -24,15 +26,17 @@
   }
 
   //Edit Item Title
-  function editTitle() {
+  function editTitle(id, newTitle) {
     console.log("EDITED:", selectedItem?.title);
+    editItem(id, newTitle);
     closeDialog();
   }
 
   // Delete Item
-  function deleteItem() {
+  function deleteMediaItem(id) {
     console.log("DELETED:", selectedItem?.title);
-    //closeDialog();
+    deleteItem(id);
+    closeDialog();
   }
 
   // function showDetail(item) {
@@ -68,7 +72,7 @@
       <button class="btn action-btn btn-edit" onclick={openEditDialog}>
         Edit
       </button>
-      <button class="btn action-btn btn-del" onclick={deleteItem}>
+      <button class="btn action-btn btn-del" onclick={() => {deleteMediaItem(selectedItem?.id)}}>
         Delete
       </button>
     {:else if dialogMode === "edit"}
@@ -81,7 +85,7 @@
         />
         <img src={selectedItem.imageUrl} alt="">
       {/if}
-      <button class="btn action-btn btn-add" onclick={editTitle}> Save </button>
+      <button class="btn action-btn btn-add" onclick={() => {editTitle(selectedItem?.id, selectedItem?.title)}}> Save </button>
     {/if}
   </Dialog>
 {/if}

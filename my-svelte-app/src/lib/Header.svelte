@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  import { addNewMedia, itemTitle } from "$lib/mediaStore.js";
+  import { addNewItem, itemTitle } from "$lib/mediaStore.js";
 
   import { slide } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
@@ -41,7 +41,7 @@
   //'add new media' handler
   function handleAddNewMedia() {
     itemTitle.set(newTitle);
-    addNewMedia();
+    addNewItem();
     closeDialog();
     newTitle = "";
   }
