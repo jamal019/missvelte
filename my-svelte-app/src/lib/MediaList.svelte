@@ -1,13 +1,15 @@
 <script>
-// @ts-nocheck
+  // @ts-nocheck
 
-  import { items, deleteItem, editItem} from "$lib/mediaStore.js";
+  import { items, deleteItem, editItem } from "$lib/mediaStore.js";
   import Dialog from "./Dialog.svelte";
+  import Details from "./Details.svelte";
   //import type { MediaItem } from "./models/MediaItem";
 
   let showDialog = $state(false);
   let selectedItem = $state(null);
   let dialogMode = $state("view");
+  let detailsItem = $state(false);
 
   function openDialog(item) {
     selectedItem = item;
@@ -39,17 +41,27 @@
     closeDialog();
   }
 
-  // function showDetail(item) {
-  //   console.log("x", detailsItem, item);
-  //   selectedItem = item;
-  //   detailsItem = true;
-  // }
+  function showDetail(item) {
+    selectedItem = item;
+    detailsItem = true;
+    console.log("Detail", detailsItem, item);
+  }
+  function goBack() {
+    detailsItem = false;
+  }
 </script>
 
 <div class="media-list">
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
   {#each $items as item, id (id)}
-    <div class="media-item-wrap">
-      <div class={`media-item media-item-${id}`}>
+    <div class="media-item-wrap db_key-{item.id}">
+      <div
+        class={`media-item media-item-${id}`}
+        onclick={() => {
+          showDetail(item);
+        }}
+      >
         <img src={item.imageUrl} alt={item.title} />
         <div class="media-item-content">
           <h3>{item.title}</h3>
@@ -72,7 +84,12 @@
       <button class="btn action-btn btn-edit" onclick={openEditDialog}>
         Edit
       </button>
-      <button class="btn action-btn btn-del" onclick={() => {deleteMediaItem(selectedItem?.id)}}>
+      <button
+        class="btn action-btn btn-del"
+        onclick={() => {
+          deleteMediaItem(selectedItem?.id);
+        }}
+      >
         Delete
       </button>
     {:else if dialogMode === "edit"}
@@ -83,20 +100,24 @@
           bind:value={selectedItem.title}
           placeholder="Edit Title"
         />
-        <img src={selectedItem.imageUrl} alt="">
+        <img src={selectedItem.imageUrl} alt="" />
       {/if}
-      <button class="btn action-btn btn-add" onclick={() => {editTitle(selectedItem?.id, selectedItem?.title)}}> Save </button>
+      <button
+        class="btn action-btn btn-add"
+        onclick={() => {
+          editTitle(selectedItem?.id, selectedItem?.title);
+        }}
+      >
+        Save
+      </button>
     {/if}
   </Dialog>
 {/if}
 
 <!--show Details Page/Modal-->
-<!-- {#if detailsItem}
-  <div class="details-view">
-    {selectedItem.title}
-    <Details imgSrc={selectedItem.imageUrl} />
-  </div>
-{/if} -->
+{#if detailsItem}
+  <Details imgSrc={selectedItem?.imageUrl} {goBack} />
+{/if}
 
 <style>
   .media-list {
@@ -113,18 +134,11 @@
   .media-item {
     display: flex;
     align-items: center;
+    flex: 1;
   }
   img {
     width: 50px;
     height: 50px;
     margin-right: 10px;
-  }
-
-  .details-view {
-    position: absolute;
-    background-color: white;
-    top: 7.5vh;
-    width: 100vw;
-    height: 100vh;
   }
 </style>

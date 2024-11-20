@@ -28,7 +28,12 @@ export const itemTitle = writable("");
 //   ]);
 // }
 
-//INDEXEDDB
+/*
+***************
+INITIALIZE INDEXEDDB
+***************
+*/
+
 let db;
 if (typeof window !== "undefined") {
   const indexedDB = window.indexedDB;
@@ -97,7 +102,7 @@ export const addNewItem = () => {
   const randomImgId = Math.floor(Math.random() * 1000);
   const newItem = new MediaItem(
     titleValue,
-    `https://picsum.photos/100/100?random=${randomImgId}`,
+    `https://picsum.photos/600/600?random=${randomImgId}`,
     new Date().toLocaleDateString("de-DE"),
     52.52,
     13.405
@@ -109,7 +114,10 @@ export const addNewItem = () => {
   const req = objStore.add(newItem);
 
   //on success, update svelte items writable store
-  req.onsuccess = () => {
+  req.onsuccess = (event) => {
+    console.log("key", event.target.result);
+    const generatedId = event.target.result;
+    newItem.id = generatedId;
     items.update((currentItems) => [...currentItems, newItem]);
     console.log("New Item added:", newItem);
   };
@@ -154,10 +162,15 @@ export const editItem = (id, newTitle) => {
     objStore.put(item);
 
     //update svelte items writable store
-    //getAllItems();
-    console.log("Edited Item:", id, newTitle);
+    items.update((currentItems) => {
+      const index = currentItems.findIndex((i) => i.id === id);
+      if (index !== -1) {
+        currentItems[index] = { ...currentItems[index], title: newTitle };
+      }
+      return currentItems;
+    });
   };
-  // Error
+  //Error
   req.onerror = (err) => {
     console.error("Error deleting item", err);
   };
