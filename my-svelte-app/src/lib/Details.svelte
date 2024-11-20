@@ -5,8 +5,8 @@
 </script>
 
 <div class="details-view" transition:fade={{ duration: 300 }}>
+  <button class="btn back-btn icon" onclick={goBack}>&#8592;</button>
   <img src={imgSrc} alt="" />
-  <button onclick={goBack}>back</button>
 </div>
 
 <style>
@@ -20,5 +20,10 @@
     top: 7.4vh;
     width: 100vw;
     height: 100vh;
+  }
+  .back-btn{
+    color: #e93f33;
+    padding: 5px 10px;
+    font-size: 2rem;
   }
 </style>

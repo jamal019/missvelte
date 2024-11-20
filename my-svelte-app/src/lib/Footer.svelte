@@ -8,7 +8,7 @@
 
 <footer class="red-bg">
   <p>© MIS Svelte 2024</p>
-  <button onclick={refreshHandler}>refresh</button>
+  <button class="btn refresh-icon icon" onclick={refreshHandler}>⟳</button>
 </footer>
 
 <style>
@@ -23,6 +23,7 @@
     width: 100%;
   }
   button{
-    float: right;
+    position: absolute;
+    right: 1rem;
   }
 </style>
