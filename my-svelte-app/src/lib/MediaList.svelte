@@ -95,12 +95,12 @@
     {:else if dialogMode === "edit"}
       <!-- Edit Title -->
       {#if selectedItem}
+        <img src={selectedItem.imageUrl} alt="" style="position: absolute; top:.5rem;right:0" />
         <input
           type="text"
           bind:value={selectedItem.title}
           placeholder="Edit Title"
         />
-        <img src={selectedItem.imageUrl} alt="" />
       {/if}
       <button
         class="btn action-btn btn-add"
@@ -135,6 +135,7 @@
     display: flex;
     align-items: center;
     flex: 1;
+    cursor: pointer;
   }
   img {
     width: 50px;
