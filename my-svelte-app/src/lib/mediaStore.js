@@ -6,6 +6,7 @@ import { MediaItem } from "$lib/models/MediaItem";
 // Svelte stores
 export const items = writable([]);
 export const itemTitle = writable("");
+export const itemImage = writable("");
 
 // export function addNewMedia() {
 //   let titleValue = "";
@@ -98,11 +99,17 @@ export const addNewItem = () => {
     titleValue = value;
   })();
 
+  let imgSrcValue = "";
+  itemImage.subscribe((src) => {
+    imgSrcValue = src;
+  })();
+
   //create new MediaItem
-  const randomImgId = Math.floor(Math.random() * 1000);
+  //const randomImgId = Math.floor(Math.random() * 1000);
   const newItem = new MediaItem(
     titleValue,
-    `https://picsum.photos/600/600?random=${randomImgId}`,
+    imgSrcValue,
+    //`https://picsum.photos/600/600?random=${randomImgId}`,
     new Date().toLocaleDateString("de-DE"),
     52.52,
     13.405

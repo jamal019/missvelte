@@ -1,14 +1,18 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  import { addNewItem, itemTitle } from "$lib/mediaStore.js";
+  import { addNewItem, itemTitle, itemImage } from "$lib/mediaStore.js";
 
   import { slide } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
   import Dialog from "./Dialog.svelte";
+  import ImgUpload from "./ImgUpload.svelte";
 
   //new media title
   let newTitle = $state("");
+
+  //new media img
+  let newImg = $state("https://picsum.photos/600/600?random=46");
 
   //Toggle Burger Menu
   let showMenu = $state(false);
@@ -36,14 +40,38 @@
 
   function closeDialog() {
     showDialog = false;
+    validator = false;
+    newTitle = "";
   }
 
   //'add new media' handler
   function handleAddNewMedia() {
-    itemTitle.set(newTitle);
-    addNewItem();
-    closeDialog();
-    newTitle = "";
+    if (newTitle.trim() !== "") {
+      itemTitle.set(newTitle);
+      itemImage.set(newImg);
+
+      addNewItem();
+      closeDialog();
+      newTitle = "";
+    } else {
+      handleValidate();
+    }
+  }
+
+  //validate input field
+  let validator = $state(false);
+  function handleValidate() {
+    //alert("Add Title");
+    validator = true;
+  }
+
+  function resetValidation(ev: Event) {
+    let input = ev.target as HTMLInputElement;
+    input.style.borderColor = "green";
+  }
+
+  function chosenImg(event: Event) {
+    console.log(event.target);
   }
 </script>
 
@@ -75,7 +103,19 @@
 <!--show Add New Dialog-->
 {#if showDialog}
   <Dialog title="New Media" {closeDialog}>
-    <input bind:value={newTitle} type="text" placeholder="Name" id="newItem" />
+    <div class="inputs-wrap">
+      <input
+        bind:value={newTitle}
+        type="text"
+        placeholder="Name"
+        id="newItem"
+        onfocus={resetValidation}
+        onchange={resetValidation}
+        style:border-color={validator ? "#e93f33" : "#62965a"}
+      />
+      <!-- <input onchange={chosenImg} type="file" id="newImgItem" accept="image/png, image/jpeg" /> -->
+      <ImgUpload />
+    </div>
     <button class="btn action-btn btn-add" onclick={handleAddNewMedia}
       >Add New</button
     >
@@ -89,5 +129,17 @@
     align-items: center;
     padding: 10px;
     height: 5vh;
+  }
+  /* input[type="file"] {
+    border: none;
+  } */
+  .inputs-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1.5rem;
+  }
+  #newItem{
+    flex: 1;
   }
 </style>
