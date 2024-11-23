@@ -31,7 +31,7 @@ main {
   top: 0;
   width: 90vw;
   height: 100vh;
-  z-index: 99;
+  z-index: 99999;
 }
 @media screen and (min-width: 900px) {
   .burger-menu {
