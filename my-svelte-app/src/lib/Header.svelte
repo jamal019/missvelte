@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  import { addNewItem, itemTitle, itemImage } from "$lib/mediaStore.js";
+  import { addNewItem, itemTitle, itemImage, handleAutofocus } from "$lib/mediaStore.js";
 
   import { slide } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
@@ -73,6 +73,7 @@
   function chosenImg(event: Event) {
     console.log(event.target);
   }
+
 </script>
 
 <!--Header-->
@@ -109,6 +110,7 @@
         type="text"
         placeholder="Name"
         id="newItem"
+        use:handleAutofocus
         onfocus={resetValidation}
         onchange={resetValidation}
         style:border-color={validator ? "#e93f33" : "#62965a"}

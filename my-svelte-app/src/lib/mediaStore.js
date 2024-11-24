@@ -187,3 +187,10 @@ export const editItem = (id, newTitle) => {
 export const refresh = () => {
   getAllItems();
 };
+
+
+
+//AUTOFOCUS
+export function handleAutofocus(el) {
+  el.focus();
+}

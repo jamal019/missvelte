@@ -1,7 +1,7 @@
 <script>
   // @ts-nocheck
 
-  import { items, deleteItem, editItem } from "$lib/mediaStore.js";
+  import { items, deleteItem, editItem, handleAutofocus } from "$lib/mediaStore.js";
   import Dialog from "./Dialog.svelte";
   import Details from "./Details.svelte";
   //import type { MediaItem } from "./models/MediaItem";
@@ -98,6 +98,7 @@
         <img src={selectedItem.imageUrl} alt="" style="position: absolute; top:.5rem;right:0" />
         <input
           type="text"
+          use:handleAutofocus
           bind:value={selectedItem.title}
           placeholder="Edit Title"
         />
