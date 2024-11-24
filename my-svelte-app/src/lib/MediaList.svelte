@@ -117,7 +117,7 @@
 
 <!--show Details Page/Modal-->
 {#if detailsItem}
-  <Details imgSrc={selectedItem?.imageUrl} {goBack} />
+  <Details imgSrc={selectedItem?.imageUrl} {goBack} deleteCurrentItem={() => {deleteMediaItem(selectedItem?.id)}} />
 {/if}
 
 <style>

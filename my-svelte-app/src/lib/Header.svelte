@@ -139,7 +139,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 1.5rem;
+    padding: 0 1.25rem;
   }
   #newItem{
     flex: 1;

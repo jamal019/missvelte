@@ -1,11 +1,22 @@
 <script>
   import { fade } from "svelte/transition";
 
-  let { imgSrc, goBack } = $props();
+  let { imgSrc, goBack, deleteCurrentItem } = $props();
 </script>
 
 <div class="details-view" transition:fade={{ duration: 300 }}>
-  <button class="btn back-btn icon" onclick={goBack}>&#8592;</button>
+  <div class="action-btns">
+    <button class="btn back-btn icon" onclick={goBack}>&#8592;</button>
+    <button
+      class="btn delete-btn icon"
+      onclick={() => {
+        deleteCurrentItem();
+        goBack();
+      }}
+    >
+      <img class="delete-icon" src="/delete.png" alt="delete icon" />
+    </button>
+  </div>
   <img src={imgSrc} alt="" />
 </div>
 
@@ -21,9 +32,16 @@
     width: 100vw;
     height: 100vh;
   }
-  .back-btn{
-    color: #e93f33;
+  .action-btns {
+    display: flex;
+    justify-content: space-between;
     padding: 5px 10px;
+  }
+  .back-btn {
+    color: #e93f33;
     font-size: 2rem;
+  }
+  .delete-icon {
+    max-width: 28px;
   }
 </style>
