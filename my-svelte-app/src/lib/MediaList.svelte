@@ -157,5 +157,7 @@
     width: 50px;
     height: 50px;
     margin-right: 10px;
+    object-fit: cover;
+    object-position: center;
   }
 </style>

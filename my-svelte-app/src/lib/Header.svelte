@@ -13,13 +13,13 @@
   import Dialog from "./Dialog.svelte";
   import ImgUpload from "./ImgUpload.svelte";
 
-  //new media title
+  //new media title state
   let newTitle = $state("");
 
-  //new media img
-  let newImg = $state(`https://picsum.photos/600/600?random=${Math.floor(Math.random()*100)}`);
+  //new media img state
+  let newImg = $state("");
 
-  //Toggle Burger Menu
+  //Toggle Burger Menu bool state
   let showMenu = $state(false);
 
   function toggleMenu() {
@@ -121,8 +121,8 @@
         style:border-color={validator ? "#e93f33" : "#62965a"}
       />
       <!-- <input onchange={chosenImg} type="file" id="newImgItem" accept="image/png, image/jpeg" /> -->
-      <ImgUpload />
-    </div>
+      <ImgUpload bind:newImg /> 
+    </div> 
       <button class="btn action-btn btn-add" onclick={handleAddNewMedia}
         >Add New</button
       >
