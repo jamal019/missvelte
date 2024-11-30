@@ -1,7 +1,12 @@
 <script>
   // @ts-nocheck
 
-  import { items, deleteItem, editItem, handleAutofocus } from "$lib/mediaStore.js";
+  import {
+    items,
+    deleteItem,
+    editItem,
+    handleAutofocus,
+  } from "$lib/mediaStore.js";
   import Dialog from "./Dialog.svelte";
   import Details from "./Details.svelte";
   //import type { MediaItem } from "./models/MediaItem";
@@ -95,29 +100,39 @@
     {:else if dialogMode === "edit"}
       <!-- Edit Title -->
       {#if selectedItem}
-        <img src={selectedItem.imageUrl} alt="" style="position: absolute; top:.5rem;right:0" />
+        <img
+          src={selectedItem.imageUrl}
+          alt=""
+          style="position: absolute; top:.5rem;right:0"
+        />
         <input
           type="text"
           use:handleAutofocus
           bind:value={selectedItem.title}
           placeholder="Edit Title"
         />
+        <button
+          class="btn action-btn btn-add"
+          onclick={() => {
+            editTitle(selectedItem?.id, selectedItem?.title);
+          }}
+        >
+          Save
+        </button>
       {/if}
-      <button
-        class="btn action-btn btn-add"
-        onclick={() => {
-          editTitle(selectedItem?.id, selectedItem?.title);
-        }}
-      >
-        Save
-      </button>
     {/if}
   </Dialog>
 {/if}
 
 <!--show Details Page/Modal-->
 {#if detailsItem}
-  <Details imgSrc={selectedItem?.imageUrl} {goBack} deleteCurrentItem={() => {deleteMediaItem(selectedItem?.id)}} />
+  <Details
+    imgSrc={selectedItem?.imageUrl}
+    {goBack}
+    deleteCurrentItem={() => {
+      deleteMediaItem(selectedItem?.id);
+    }}
+  />
 {/if}
 
 <style>

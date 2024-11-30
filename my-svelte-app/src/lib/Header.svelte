@@ -1,7 +1,12 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  import { addNewItem, itemTitle, itemImage, handleAutofocus } from "$lib/mediaStore.js";
+  import {
+    addNewItem,
+    itemTitle,
+    itemImage,
+    handleAutofocus,
+  } from "$lib/mediaStore.js";
 
   import { slide } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
@@ -12,7 +17,7 @@
   let newTitle = $state("");
 
   //new media img
-  let newImg = $state("https://picsum.photos/600/600?random=46");
+  let newImg = $state(`https://picsum.photos/600/600?random=${Math.floor(Math.random()*100)}`);
 
   //Toggle Burger Menu
   let showMenu = $state(false);
@@ -73,7 +78,6 @@
   function chosenImg(event: Event) {
     console.log(event.target);
   }
-
 </script>
 
 <!--Header-->
@@ -103,6 +107,7 @@
 
 <!--show Add New Dialog-->
 {#if showDialog}
+<form onsubmit={handleAddNewMedia}>
   <Dialog title="New Media" {closeDialog}>
     <div class="inputs-wrap">
       <input
@@ -118,10 +123,12 @@
       <!-- <input onchange={chosenImg} type="file" id="newImgItem" accept="image/png, image/jpeg" /> -->
       <ImgUpload />
     </div>
-    <button class="btn action-btn btn-add" onclick={handleAddNewMedia}
-      >Add New</button
-    >
+      <button class="btn action-btn btn-add" onclick={handleAddNewMedia}
+        >Add New</button
+      >
   </Dialog>
+</form>
+
 {/if}
 
 <style>
@@ -135,13 +142,13 @@
   /* input[type="file"] {
     border: none;
   } */
-  .inputs-wrap{
+  .inputs-wrap {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0 1.25rem;
   }
-  #newItem{
+  #newItem {
     flex: 1;
   }
 </style>

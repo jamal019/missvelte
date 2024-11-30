@@ -111,8 +111,9 @@ export const addNewItem = () => {
     imgSrcValue,
     //`https://picsum.photos/600/600?random=${randomImgId}`,
     new Date().toLocaleDateString("de-DE"),
-    52.52,
-    13.405
+    //random locations //TODO
+    Math.floor(Math.random() * (30 - 20 + 1)) + 20,
+    Math.floor(Math.random() * (30 - 7 + 1)) + 7,
   );
 
   //add new MediaItem into object store

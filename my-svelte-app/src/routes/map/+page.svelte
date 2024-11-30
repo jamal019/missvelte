@@ -1,23 +1,51 @@
 <script>
-  // @ts-ignore
+  // @ts-nocheck
+
   import { onMount } from "svelte";
+
+  import { items } from "$lib/mediaStore.js";
 
   let map;
 
+  function openDetails() {
+    console.log("Detailsview");
+  }
+
   onMount(() => {
     // Initialize the map
-    // @ts-ignore
-    map = L.map("map").setView([52.52, 13.405], 10); // Default coordinates
+    map = L.map("map").setView([52.52, 13.405], 5); // Default coordinates
 
-    // @ts-ignore
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
     // Add a marker
-    // @ts-ignore
-    L.marker([52.52, 13.405]).addTo(map).bindPopup("Lorem Ipsum").openPopup();
+    $items.forEach((item) => {
+      const popupContent = `
+        <div>
+          <button class="popup-link" data-title="${item.title}">
+            ${item.title}
+          </button>
+        </div>
+      `;
+
+      L.marker([item.latitude, item.longitude])
+        .addTo(map)
+        .bindPopup(popupContent)
+        //.openPopup();
+    });
+
+    //on popup click
+    map.on("popupopen", (e) => {
+      const link = e.popup._contentNode.querySelector(".popup-link");
+      if (link) {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          openDetails();
+        });
+      }
+    });
   });
 </script>
 

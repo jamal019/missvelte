@@ -31,7 +31,7 @@ main {
   top: 0;
   width: 90vw;
   height: 100vh;
-  z-index: 99999;
+  z-index: 99999999;
 }
 @media screen and (min-width: 900px) {
   .burger-menu {
@@ -97,4 +97,11 @@ input {
   margin: 1rem;
   border: none;
   border-bottom: 2px solid #62965a;
+}
+
+/*Map*/
+.popup-link{
+  border: none;
+  background: none;
+  text-decoration: underline;
 }
