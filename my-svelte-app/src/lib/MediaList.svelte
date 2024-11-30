@@ -9,12 +9,15 @@
   } from "$lib/mediaStore.js";
   import Dialog from "./Dialog.svelte";
   import Details from "./Details.svelte";
+  import ImgUpload from "./ImgUpload.svelte";
   //import type { MediaItem } from "./models/MediaItem";
 
   let showDialog = $state(false);
   let selectedItem = $state(null);
   let dialogMode = $state("view");
   let detailsItem = $state(false);
+
+  let newImg = $state("");
 
   function openDialog(item) {
     selectedItem = item;
@@ -32,12 +35,14 @@
 
   function openEditDialog() {
     dialogMode = "edit";
+    newImg = selectedItem?.imageUrl || "";
   }
 
-  //Edit Item Title
-  function editTitle(id, newTitle) {
-    console.log("EDITED:", selectedItem?.title);
-    editItem(id, newTitle);
+  //Edit Item Title or Image
+  function editHandler(id, newTitle) {
+    console.log("EDITED:", selectedItem?.title, id);
+    const imageToSave = newImg || selectedItem?.imageUrl;
+    editItem(id, newTitle, imageToSave);
     closeDialog();
   }
 
@@ -52,9 +57,11 @@
     selectedItem = item;
     detailsItem = true;
     console.log("Detail", detailsItem, item);
+    //document.body.classList.add("no-scroll");
   }
   function goBack() {
     detailsItem = false;
+    //document.body.classList.remove("no-scroll");
   }
 </script>
 
@@ -103,7 +110,7 @@
       <!-- Edit Title -->
       {#if selectedItem}
         <img
-          src={selectedItem.imageUrl}
+          src={newImg || selectedItem?.imageUrl}
           alt=""
           style="position: absolute; top:.5rem;right:0"
         />
@@ -113,10 +120,11 @@
           bind:value={selectedItem.title}
           placeholder="Edit Title"
         />
+        <ImgUpload bind:newImg />
         <button
           class="btn action-btn btn-add"
           onclick={() => {
-            editTitle(selectedItem?.id, selectedItem?.title);
+            editHandler(selectedItem?.id, selectedItem?.title);
           }}
         >
           Save

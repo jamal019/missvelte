@@ -14,6 +14,18 @@
       reader.readAsDataURL(file);
     }
   }
+
+//   function handleImageUpload(event) {
+//   const file = event.target.files[0];
+//   console.log("File: ", file);
+
+//   if (file) {
+//     const objectURL = URL.createObjectURL(file);
+//     newImg = objectURL;
+//   }
+// }
+
+
 </script>
 
 <div class="image-upload">

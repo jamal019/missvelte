@@ -113,7 +113,7 @@ export const addNewItem = () => {
     new Date().toLocaleDateString("de-DE"),
     //random locations //TODO
     Math.floor(Math.random() * (30 - 20 + 1)) + 20,
-    Math.floor(Math.random() * (30 - 7 + 1)) + 7,
+    Math.floor(Math.random() * (30 - 7 + 1)) + 7
   );
 
   //add new MediaItem into object store
@@ -156,7 +156,16 @@ export const deleteItem = (id) => {
 };
 
 //EDIT
-export const editItem = (id, newTitle) => {
+export const editItem = (id, newTitle, newImage) => {
+  if (!id) {
+    console.error("Invalid ID:", id);
+    return;
+  }
+  if (!newTitle && !newImage) {
+    console.error("No changes provided");
+    return;
+  }
+
   //edit MediaItem title
   const transaction = db.transaction("mediaItems", "readwrite");
   const objStore = transaction.objectStore("mediaItems");
@@ -166,21 +175,28 @@ export const editItem = (id, newTitle) => {
   req.onsuccess = () => {
     //change item's title and put into store
     const item = req.result;
-    item.title = newTitle;
+    if (item) {
+      item.title = newTitle;
+      item.imageUrl = newImage;
+    }
     objStore.put(item);
 
     //update svelte items writable store
     items.update((currentItems) => {
       const index = currentItems.findIndex((i) => i.id === id);
       if (index !== -1) {
-        currentItems[index] = { ...currentItems[index], title: newTitle };
+        currentItems[index] = {
+          ...currentItems[index],
+          title: newTitle,
+          imageUrl: newImage,
+        };
       }
       return currentItems;
     });
   };
   //Error
   req.onerror = (err) => {
-    console.error("Error deleting item", err);
+    console.error("Error editing item", err);
   };
 };
 
@@ -188,8 +204,6 @@ export const editItem = (id, newTitle) => {
 export const refresh = () => {
   getAllItems();
 };
-
-
 
 //AUTOFOCUS
 export function handleAutofocus(el) {
