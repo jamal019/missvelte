@@ -20,12 +20,14 @@
     selectedItem = item;
     showDialog = true;
     dialogMode = "view";
+    document.body.classList.add("no-scroll");
   }
 
   function closeDialog() {
     showDialog = false;
     selectedItem = null;
     dialogMode = "view";
+    document.body.classList.remove("no-scroll");
   }
 
   function openEditDialog() {
@@ -83,7 +85,7 @@
 
 <!-- Dynamic Dialog -->
 {#if showDialog}
-  <Dialog title={selectedItem?.title} {closeDialog}>
+  <Dialog title={selectedItem?.title} {closeDialog} classname="actions-dialog">
     {#if dialogMode === "view"}
       <!-- Edit or Delete -->
       <button class="btn action-btn btn-edit" onclick={openEditDialog}>

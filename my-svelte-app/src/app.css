@@ -5,6 +5,9 @@ body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   min-height: 100vh;
 }
+body.no-scroll{
+  overflow: hidden;
+}
 
 h1,
 h2,

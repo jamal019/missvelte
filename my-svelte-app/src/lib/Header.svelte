@@ -41,23 +41,27 @@
 
   function openDialog() {
     showDialog = true;
+    document.body.classList.add("no-scroll");
   }
 
   function closeDialog() {
     showDialog = false;
     validator = false;
     newTitle = "";
+    newImg = "";
+    document.body.classList.remove("no-scroll");
   }
 
   //'add new media' handler
   function handleAddNewMedia() {
-    if (newTitle.trim() !== "") {
+    if (newTitle.trim() !== "" && newImg !== "") {
       itemTitle.set(newTitle);
       itemImage.set(newImg);
 
       addNewItem();
       closeDialog();
       newTitle = "";
+      newImg = "";
     } else {
       handleValidate();
     }
@@ -73,10 +77,6 @@
   function resetValidation(ev: Event) {
     let input = ev.target as HTMLInputElement;
     input.style.borderColor = "green";
-  }
-
-  function chosenImg(event: Event) {
-    console.log(event.target);
   }
 </script>
 
@@ -107,28 +107,27 @@
 
 <!--show Add New Dialog-->
 {#if showDialog}
-<form onsubmit={handleAddNewMedia}>
-  <Dialog title="New Media" {closeDialog}>
-    <div class="inputs-wrap">
-      <input
-        bind:value={newTitle}
-        type="text"
-        placeholder="Name"
-        id="newItem"
-        use:handleAutofocus
-        onfocus={resetValidation}
-        onchange={resetValidation}
-        style:border-color={validator ? "#e93f33" : "#62965a"}
-      />
-      <!-- <input onchange={chosenImg} type="file" id="newImgItem" accept="image/png, image/jpeg" /> -->
-      <ImgUpload bind:newImg /> 
-    </div> 
+  <form onsubmit={handleAddNewMedia}>
+    <Dialog title="New Media" {closeDialog} classname="add-dialog">
+      <div class="inputs-wrap">
+        <input
+          bind:value={newTitle}
+          type="text"
+          placeholder="Name"
+          id="newItem"
+          use:handleAutofocus
+          onfocus={resetValidation}
+          onchange={resetValidation}
+          style:border-color={validator ? "#e93f33" : "#62965a"}
+        />
+        <!-- <input onchange={chosenImg} type="file" id="newImgItem" accept="image/png, image/jpeg" /> -->
+        <ImgUpload bind:newImg />
+      </div>
       <button class="btn action-btn btn-add" onclick={handleAddNewMedia}
         >Add New</button
       >
-  </Dialog>
-</form>
-
+    </Dialog>
+  </form>
 {/if}
 
 <style>
