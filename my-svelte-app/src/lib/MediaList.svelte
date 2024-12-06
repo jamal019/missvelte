@@ -46,6 +46,9 @@
     closeDialog();
   }
 
+  function openDeleteDialog() {
+    dialogMode = "accept-delete";
+  }
   // Delete Item
   function deleteMediaItem(id) {
     console.log("DELETED:", selectedItem?.title);
@@ -98,21 +101,16 @@
       <button class="btn action-btn btn-edit" onclick={openEditDialog}>
         Edit
       </button>
-      <button
-        class="btn action-btn btn-del"
-        onclick={() => {
-          deleteMediaItem(selectedItem?.id);
-        }}
-      >
+      <button class="btn action-btn btn-del" onclick={openDeleteDialog}>
         Delete
       </button>
     {:else if dialogMode === "edit"}
       <!-- Edit Title -->
       {#if selectedItem}
         <img
+          class="prev"
           src={newImg || selectedItem?.imageUrl}
-          alt=""
-          style="position: absolute; top:.5rem;right:0"
+          alt="preview"
         />
         <input
           type="text"
@@ -120,7 +118,9 @@
           bind:value={selectedItem.title}
           placeholder="Edit Title"
         />
-        <ImgUpload bind:newImg />
+        <div class="preview-edit">
+          <ImgUpload bind:newImg />
+        </div>
         <button
           class="btn action-btn btn-add"
           onclick={() => {
@@ -130,6 +130,16 @@
           Save
         </button>
       {/if}
+    {:else if dialogMode === "accept-delete"}
+      <img class="prev" src={newImg || selectedItem?.imageUrl} alt="preview" />
+      <p class="notice">Are you sure you want to delete?</p>
+      <button class="btn action-btn" onclick={closeDialog}>Cancel</button>
+      <button
+        class="btn action-btn btn-del"
+        onclick={() => {
+          deleteMediaItem(selectedItem?.id);
+        }}>Delete</button
+      >
     {/if}
   </Dialog>
 {/if}
@@ -169,5 +179,8 @@
     margin-right: 10px;
     object-fit: cover;
     object-position: center;
+  }
+  .preview-edit {
+    margin: 0.5rem 1rem;
   }
 </style>

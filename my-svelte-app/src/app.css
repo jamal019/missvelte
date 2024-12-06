@@ -5,7 +5,7 @@ body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   min-height: 100vh;
 }
-body.no-scroll{
+body.no-scroll {
   overflow: hidden;
 }
 
@@ -61,10 +61,10 @@ main {
 }
 
 /*Buttons*/
-.icon{
+.icon {
   color: #fff;
 }
-.icon-red{
+.icon-red {
   font-weight: bold;
   font-size: 1.5rem !important;
   color: #e93f33;
@@ -96,15 +96,28 @@ main {
 
 /*Input*/
 input {
-  padding: .5rem;
+  padding: 0.5rem;
   margin: 1rem;
   border: none;
   border-bottom: 2px solid #62965a;
 }
 
 /*Map*/
-.popup-link{
+.popup-link {
   border: none;
   background: none;
   text-decoration: underline;
+}
+
+/*notice*/
+.notice {
+  color: #e93f33;
+  padding: 2rem 0;
+  text-align: center;
+  font-weight: bold;
+}
+img.prev {
+  position: absolute;
+  top: 0.5rem;
+  right: 0;
 }

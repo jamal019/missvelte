@@ -83,7 +83,7 @@
 <!--Header-->
 <header class="red-bg">
   <button class="btn menu-icon icon" onclick={toggleMenu}>☰</button>
-  <h1>Medien</h1>
+  <h1>Media</h1>
   <button class="btn add-icon icon" onclick={openDialog}>+</button>
 </header>
 
@@ -127,6 +127,9 @@
         >Add New</button
       >
     </Dialog>
+    {#if newImg != ""}
+    <img class="preview" src={newImg} alt="preview" />
+    {/if}
   </form>
 {/if}
 
@@ -149,5 +152,17 @@
   }
   #newItem {
     flex: 1;
+  }
+  img.preview {
+    position: absolute;
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+    left: 0;
+    right: 0;
+    top: 10%;
+    bottom: 0;
+    opacity: 0.8;
+    margin: auto;
   }
 </style>
