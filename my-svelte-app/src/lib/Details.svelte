@@ -1,7 +1,7 @@
 <script>
   import { fade } from "svelte/transition";
 
-  let { imgSrc, goBack, deleteCurrentItem } = $props();
+  let { goBack, deleteCurrentItem, imgData } = $props();
 </script>
 
 <div class="details-view" transition:fade={{ duration: 300 }}>
@@ -11,13 +11,14 @@
       class="btn delete-btn icon"
       onclick={() => {
         deleteCurrentItem();
-        goBack();
+        //goBack();
       }}
     >
       <img class="delete-icon" src="/delete.png" alt="delete icon" />
     </button>
   </div>
-  <img src={imgSrc} alt="" />
+  <h2>{imgData?.title}</h2>
+  <img src={imgData?.imageUrl} alt="" />
 </div>
 
 <style>
@@ -25,13 +26,19 @@
     width: 100vw;
     object-fit: cover;
   }
+  h2{
+    color: #e93f33;
+    font-weight: 500;
+    padding: 0 10px;
+    margin: 0.5rem 0;
+  }
   .details-view {
     position: absolute;
     background-color: white;
     top: 7.4vh;
     width: 100vw;
     height: 100vh;
-    z-index: 9999;
+    z-index: 999;
   }
   .action-btns {
     display: flex;

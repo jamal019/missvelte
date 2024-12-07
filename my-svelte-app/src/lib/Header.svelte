@@ -164,5 +164,6 @@
     bottom: 0;
     opacity: 0.8;
     margin: auto;
+    z-index: 99999;
   }
 </style>

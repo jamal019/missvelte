@@ -35,6 +35,7 @@
     height: 100vh;
     top: 0;
     background-color: rgba(0, 0, 0, 0.9);
+    z-index: 9999;
   }
   /*Dialog*/
   .add-dialog {
@@ -52,6 +53,7 @@
     background-color: #fff;
     top: 0; /*10vh*/
     bottom: 0;
+    z-index: 99999;
   }
   @media screen and (min-width: 900px) {
     .dialog {

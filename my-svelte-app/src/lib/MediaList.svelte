@@ -28,7 +28,10 @@
 
   function closeDialog() {
     showDialog = false;
-    selectedItem = null;
+    //selectedItem = null;
+    if (!detailsItem) {
+      selectedItem = null;
+    } 
     dialogMode = "view";
     document.body.classList.remove("no-scroll");
   }
@@ -54,6 +57,7 @@
     console.log("DELETED:", selectedItem?.title);
     deleteItem(id);
     closeDialog();
+    goBack(); 
   }
 
   function showDetail(item) {
@@ -147,10 +151,11 @@
 <!--show Details Page/Modal-->
 {#if detailsItem}
   <Details
-    imgSrc={selectedItem?.imageUrl}
+    imgData={selectedItem}
     {goBack}
     deleteCurrentItem={() => {
-      deleteMediaItem(selectedItem?.id);
+      dialogMode = "accept-delete";
+      showDialog = true; 
     }}
   />
 {/if}
