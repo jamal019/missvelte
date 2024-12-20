@@ -22,6 +22,9 @@
   //Toggle Burger Menu bool state
   let showMenu = $state(false);
 
+  //Validator
+  let errorMessage = $state("");
+
   function toggleMenu() {
     showMenu = !showMenu;
   }
@@ -49,12 +52,23 @@
     validator = false;
     newTitle = "";
     newImg = "";
+    errorMessage = "";
     document.body.classList.remove("no-scroll");
   }
 
   //'add new media' handler
   function handleAddNewMedia() {
-    if (newTitle.trim() !== "" && newImg !== "") {
+    errorMessage = "";
+
+    if (newTitle.trim() === "") {
+      errorMessage += "Titel ist leer. ";
+      handleValidate();
+    }
+    if (newImg.trim() === "") {
+      errorMessage += "Bild ist leer. ";
+      handleValidate();
+    }
+    if (errorMessage === "") {
       itemTitle.set(newTitle);
       itemImage.set(newImg);
 
@@ -62,9 +76,8 @@
       closeDialog();
       newTitle = "";
       newImg = "";
-    } else {
-      handleValidate();
-    }
+      validator = false;
+    } 
   }
 
   //validate input field
@@ -77,6 +90,7 @@
   function resetValidation(ev: Event) {
     let input = ev.target as HTMLInputElement;
     input.style.borderColor = "green";
+    errorMessage = "";
   }
 </script>
 
@@ -120,15 +134,17 @@
           onchange={resetValidation}
           style:border-color={validator ? "#e93f33" : "#62965a"}
         />
-        <!-- <input onchange={chosenImg} type="file" id="newImgItem" accept="image/png, image/jpeg" /> -->
-        <ImgUpload bind:newImg />
+        <ImgUpload bind:newImg bind:newTitle reset={() => {errorMessage = ""}} />
       </div>
+      {#if errorMessage}
+        <p class="error">{errorMessage}</p>
+      {/if}
       <button class="btn action-btn btn-add" onclick={handleAddNewMedia}
         >Add New</button
       >
     </Dialog>
     {#if newImg != ""}
-    <img class="preview" src={newImg} alt="preview" />
+      <img class="preview" src={newImg} alt="preview" />
     {/if}
   </form>
 {/if}
@@ -165,5 +181,10 @@
     opacity: 0.8;
     margin: auto;
     z-index: 99999;
+  }
+  .error {
+    color: #e93f33;
+    text-align: center;
+    padding: 0.5rem 0;
   }
 </style>
