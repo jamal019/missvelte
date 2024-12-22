@@ -1,7 +1,7 @@
 <script>
   // @ts-nocheck
 
-  let { newImg = $bindable(), newTitle = $bindable(), reset } = $props();
+  let { newImg = $bindable(), newTitle = $bindable(), reset = () => {} } = $props();
 
   function handleImageUpload(event) {
     const file = event.target.files[0];
