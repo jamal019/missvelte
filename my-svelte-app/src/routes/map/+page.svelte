@@ -6,6 +6,8 @@
   import Details from "$lib/Details.svelte";
   import Dialog from "$lib/Dialog.svelte"; // Assuming you have a Dialog component
 
+  import { goto } from "$app/navigation";
+
   let showDialog = $state(false);
   let selectedItem = $state(null);
   let dialogMode = $state("view");
@@ -32,8 +34,8 @@
   // Delete Item
   function deleteMediaItem(id) {
     console.log("DELETED:", selectedItem?.title);
-    deleteItem(id); // Remove item from the store
-    removeMarker(id); // Remove marker from the map
+    deleteItem(id); 
+    removeMarker(id); 
     closeDialog();
     goBack();
   }
@@ -41,6 +43,7 @@
   function showDetail(item) {
     selectedItem = item;
     detailsItem = true;
+    //goto(`${item.title}`);
   }
 
   function goBack() {
@@ -54,14 +57,13 @@
 
   // Function to remove the marker from the map
   function removeMarker(id) {
-  const marker = Object.values(map._layers).find(
-    (layer) => layer.options && layer.options.id === id
-  );
-  if (marker) {
-    map.removeLayer(marker); // Remove the marker from the map
+    const marker = Object.values(map._layers).find(
+      (layer) => layer.options && layer.options.id === id
+    );
+    if (marker) {
+      map.removeLayer(marker); // Remove the marker from the map
+    }
   }
-}
-
 
   onMount(() => {
     // Initialize the map

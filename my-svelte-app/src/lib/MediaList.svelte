@@ -3,19 +3,20 @@
 
   import {
     items,
+    itemStorage,
     deleteItem,
     editItem,
     handleAutofocus,
   } from "$lib/mediaStore.js";
   import Dialog from "./Dialog.svelte";
-  import Details from "./Details.svelte";
+  //import Details from "./Details.svelte";
   import ImgUpload from "./ImgUpload.svelte";
   //import type { MediaItem } from "./models/MediaItem";
 
   let showDialog = $state(false);
   let selectedItem = $state(null);
   let dialogMode = $state("view");
-  let detailsItem = $state(false);
+  //let detailsItem = $state(false);
 
   let newImg = $state("");
 
@@ -29,9 +30,9 @@
   function closeDialog() {
     showDialog = false;
     //selectedItem = null;
-    if (!detailsItem) {
-      selectedItem = null;
-    } 
+    // if (!detailsItem) {
+    //   selectedItem = null;
+    // }
     dialogMode = "view";
     document.body.classList.remove("no-scroll");
   }
@@ -57,39 +58,34 @@
     console.log("DELETED:", selectedItem?.title);
     deleteItem(id);
     closeDialog();
-    goBack(); 
+    //goBack();
   }
 
-  function showDetail(item) {
-    selectedItem = item;
-    detailsItem = true;
-    console.log("Detail", detailsItem, item);
-    //document.body.classList.add("no-scroll");
-  }
-  function goBack() {
-    detailsItem = false;
-    //document.body.classList.remove("no-scroll");
-  }
+  // function showDetail(item) {
+  //   selectedItem = item;
+  //   //detailsItem = true;
+  //   //console.log("Detail", detailsItem, item);
+  //   //document.body.classList.add("no-scroll");
+  // }
+
+  // function goBack() {
+  //   detailsItem = false;
+  //   //document.body.classList.remove("no-scroll");
+  // }
 </script>
 
 <div class="media-list">
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <!-- svelte-ignore a11y_click_events_have_key_events -->
   {#each $items as item, id (id)}
-    <div class="media-item-wrap db_key-{item.id}">
-      <div
-        class={`media-item media-item-${id}`}
-        onclick={() => {
-          showDetail(item);
-        }}
-      >
+    <div class="media-item-wrap db_key-{item.id} {item.storage}">
+      <a href={item.title} class={`media-item media-item-${id}`}>
         <img src={item.imageUrl} alt={item.title} />
         <div class="media-item-content">
           <h3>{item.title}</h3>
           <p>{item.createdAt}</p>
+          <!-- <a href={item.id}>Detail</a> -->
           <!-- <p>Location: {item.latitude} {item.longitude}</p> -->
         </div>
-      </div>
+      </a>
       <button class="btn options-icon icon-red" onclick={() => openDialog(item)}
         >⋮</button
       >
@@ -149,16 +145,16 @@
 {/if}
 
 <!--show Details Page/Modal-->
-{#if detailsItem}
+<!-- {#if detailsItem}
   <Details
     imgData={selectedItem}
     {goBack}
     deleteCurrentItem={() => {
       dialogMode = "accept-delete";
-      showDialog = true; 
+      showDialog = true;
     }}
   />
-{/if}
+{/if} -->
 
 <style>
   .media-list {

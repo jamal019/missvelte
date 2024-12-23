@@ -28,6 +28,11 @@ main {
   color: white;
 }
 
+a{
+  color: #1c1c1c;
+  text-decoration: none;
+}
+
 /*Burger Menu*/
 .burger-menu {
   position: absolute;

@@ -5,6 +5,7 @@
     addNewItem,
     itemTitle,
     itemImage,
+    itemStorage,
     handleAutofocus,
   } from "$lib/mediaStore.js";
 
@@ -18,6 +19,8 @@
 
   //new media img state
   let newImg = $state("");
+
+  let setStorage = $state("");
 
   //Toggle Burger Menu bool state
   let showMenu = $state(false);
@@ -61,23 +64,37 @@
     errorMessage = "";
 
     if (newTitle.trim() === "") {
-      errorMessage += "Titel ist leer. ";
+      errorMessage += "Title is empty. ";
       handleValidate();
     }
     if (newImg.trim() === "") {
-      errorMessage += "Bild ist leer. ";
+      errorMessage += "No image chosen. ";
       handleValidate();
     }
     if (errorMessage === "") {
+      //storage location 
+      const storageTypeElement = document.querySelector(
+        'input[name="storage"]:checked'
+      ) as HTMLInputElement;
+
+      if (!storageTypeElement) {
+        errorMessage += "Please choose storage location.";
+        handleValidate();
+        return;
+      }
+      setStorage =  storageTypeElement.value;
+      console.log("Storage Location:", setStorage);
+
       itemTitle.set(newTitle);
       itemImage.set(newImg);
+      itemStorage.set(setStorage);
 
       addNewItem();
       closeDialog();
       newTitle = "";
       newImg = "";
       validator = false;
-    } 
+    }
   }
 
   //validate input field
@@ -134,11 +151,30 @@
           onchange={resetValidation}
           style:border-color={validator ? "#e93f33" : "#62965a"}
         />
-        <ImgUpload bind:newImg bind:newTitle reset={() => {errorMessage = ""}} />
+        <ImgUpload
+          bind:newImg
+          bind:newTitle
+          reset={() => {
+            errorMessage = "";
+          }}
+        />
       </div>
       {#if errorMessage}
         <p class="error">{errorMessage}</p>
       {/if}
+
+      <fieldset>
+        <legend>Storage location:</legend>
+        <div>
+          <input type="radio" id="local" name="storage" value="local" />
+          <label for="local">Local</label>
+        </div>
+        <div>
+          <input type="radio" id="remote" name="storage" value="remote" />
+          <label for="remote">Remote</label>
+        </div>
+      </fieldset>
+
       <button class="btn action-btn btn-add" onclick={handleAddNewMedia}
         >Add New</button
       >
@@ -186,5 +222,12 @@
     color: #e93f33;
     text-align: center;
     padding: 0.5rem 0;
+  }
+  fieldset {
+    border: none;
+    display: flex;
+  }
+  fieldset input {
+    margin: 0;
   }
 </style>
