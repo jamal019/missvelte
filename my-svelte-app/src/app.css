@@ -126,3 +126,9 @@ img.prev {
   top: 0.5rem;
   right: 0;
 }
+
+
+/*Map*/
+#map + .details-view{
+  z-index: 9999;
+}

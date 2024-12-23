@@ -34,8 +34,8 @@
   // Delete Item
   function deleteMediaItem(id) {
     console.log("DELETED:", selectedItem?.title);
-    deleteItem(id); 
-    removeMarker(id); 
+    deleteItem(id);
+    removeMarker(id);
     closeDialog();
     goBack();
   }
@@ -65,18 +65,65 @@
     }
   }
 
+  // onMount(() => {
+  //   // Initialize the map
+  //   map = L.map("map").setView([51.1657, 10.4515], 6); // Default coordinates
+
+  //   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  //     attribution:
+  //       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  //   }).addTo(map);
+
+  //   // Add a marker for each item
+  //   $items.forEach((item) => {
+  //     const popupContent = `
+  //       <div>
+  //         <button class="popup-link" data-title="${item.title}" data-id="${item.id}">
+  //           ${item.title}
+  //         </button>
+  //       </div>
+  //     `;
+
+  //     const marker = L.marker([item.latitude, item.longitude]).addTo(map);
+  //     marker.bindPopup(popupContent);
+  //     marker.options.id = item.id; // Store item ID on marker for later removal
+  //   });
+
+  //   // Handle popup click
+  //   map.on("popupopen", (e) => {
+  //     const link = e.popup._contentNode.querySelector(".popup-link");
+  //     if (link) {
+  //       link.addEventListener("click", (event) => {
+  //         event.preventDefault();
+  //         const itemId = link.getAttribute("data-id");
+  //         const item = $items.find((i) => i.id === Number(itemId));
+  //         showDetail(item);
+  //       });
+  //     }
+  //   });
+  // });
+
   onMount(() => {
     // Initialize the map
-    map = L.map("map").setView([52.52, 13.405], 5); // Default coordinates
+    map = L.map("map").setView([51.1657, 10.4515], 6); // Default coordinates
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
-    // Add a marker for each item
-    $items.forEach((item) => {
-      const popupContent = `
+    // Add markers for each item on initial load
+    const unsubscribe = items.subscribe(($items) => {
+      // Clear existing markers to avoid duplicates
+      map.eachLayer((layer) => {
+        if (layer instanceof L.Marker) {
+          map.removeLayer(layer);
+        }
+      });
+
+      // Add a marker for each item
+      $items.forEach((item) => {
+        const popupContent = `
         <div>
           <button class="popup-link" data-title="${item.title}" data-id="${item.id}">
             ${item.title}
@@ -84,23 +131,29 @@
         </div>
       `;
 
-      const marker = L.marker([item.latitude, item.longitude]).addTo(map);
-      marker.bindPopup(popupContent);
-      marker.options.id = item.id; // Store item ID on marker for later removal
+        const marker = L.marker([item.latitude, item.longitude]).addTo(map);
+        marker.bindPopup(popupContent);
+        marker.options.id = item.id; // Store item ID on marker for later removal
+      });
+
+      // Handle popup click
+      map.on("popupopen", (e) => {
+        const link = e.popup._contentNode.querySelector(".popup-link");
+        if (link) {
+          link.addEventListener("click", (event) => {
+            event.preventDefault();
+            const itemId = link.getAttribute("data-id");
+            const item = $items.find((i) => i.id === Number(itemId));
+            showDetail(item);
+          });
+        }
+      });
     });
 
-    // Handle popup click
-    map.on("popupopen", (e) => {
-      const link = e.popup._contentNode.querySelector(".popup-link");
-      if (link) {
-        link.addEventListener("click", (event) => {
-          event.preventDefault();
-          const itemId = link.getAttribute("data-id");
-          const item = $items.find((i) => i.id === Number(itemId));
-          showDetail(item);
-        });
-      }
-    });
+    // Cleanup
+    return () => {
+      unsubscribe();
+    };
   });
 </script>
 
