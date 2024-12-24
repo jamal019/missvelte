@@ -83,7 +83,7 @@
           <h3>{item.title}</h3>
           <p>{item.createdAt}</p>
           <!-- <a href={item.id}>Detail</a> -->
-          <!-- <p>Location: {item.latitude} {item.longitude}</p> -->
+           <!-- <p>{item.latitude} // {item.longitude}</p> -->
         </div>
       </a>
       <button class="btn options-icon icon-red" onclick={() => openDialog(item)}

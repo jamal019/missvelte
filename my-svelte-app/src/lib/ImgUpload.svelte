@@ -1,7 +1,35 @@
 <script>
   // @ts-nocheck
+  import ExifReader from "exifreader";
 
-  let { newImg = $bindable(), newTitle = $bindable(), reset = () => {} } = $props();
+  let {
+    newImg = $bindable(),
+    newTitle = $bindable(),
+    lat = $bindable(),
+    long = $bindable(),
+    reset = () => {},
+  } = $props();
+
+  const loadExif = async () => {
+    try {
+      const tags = await ExifReader.load(newImg, { expanded: true });
+      console.log("Latitude: ", tags.gps.Latitude);
+      console.log("Longitude: ", tags.gps.Longitude);
+      if (tags.gps && tags.gps.Latitude && tags.gps.Longitude) {
+        lat = tags.gps.Latitude;
+        long = tags.gps.Longitude;
+      } else {
+        // lat = 0;
+        // long = 0;
+        lat = 51.1657; 
+        long = 10.4515;
+      }
+    } catch (error) {
+      // lat = 0;
+      // long = 0;
+      console.error("Error reading EXIF data:", error);
+    }
+  };
 
   function handleImageUpload(event) {
     const file = event.target.files[0];
@@ -9,13 +37,14 @@
     if (file) {
       reset();
       const reader = new FileReader();
-      reader.onload = () => {
+      reader.onload = async () => {
         newImg = reader.result;
+        await loadExif();
       };
       reader.readAsDataURL(file);
       // use filename if title empty
       if (!newTitle || newTitle.trim() === "") {
-        newTitle = file.name.replace(/\.[^/.]+$/, ""); 
+        newTitle = file.name.replace(/\.[^/.]+$/, "");
       }
     }
   }

@@ -131,7 +131,13 @@
         </div>
       `;
 
-        const marker = L.marker([item.latitude, item.longitude]).addTo(map);
+        let customIcon = L.icon({
+          iconUrl: ''
+        });
+
+        const marker = L.marker([item.latitude, item.longitude], {
+          //icon: customIcon,
+        }).addTo(map);
         marker.bindPopup(popupContent);
         marker.options.id = item.id; // Store item ID on marker for later removal
       });

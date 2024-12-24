@@ -8,6 +8,9 @@ export const items = writable([]);
 export const itemTitle = writable("");
 export const itemImage = writable("");
 
+export const itemLat = writable(0);
+export const itemLong = writable(0);
+
 export const itemStorage = writable("");
 
 // export function addNewMedia() {
@@ -106,6 +109,17 @@ export const addNewItem = () => {
     imgSrcValue = src;
   })();
 
+  let imgLat = 0;
+  itemLat.subscribe((lat) => {
+    imgLat = lat;
+  })();
+
+  let imgLong = 0;
+  itemLong.subscribe((long) => {
+    imgLong = long;
+  })();
+
+
     let storageLoc = "";
   itemStorage.subscribe((loc) => {
     storageLoc = loc;
@@ -119,9 +133,11 @@ export const addNewItem = () => {
     //`https://picsum.photos/600/600?random=${randomImgId}`,
     new Date().toLocaleDateString("de-DE"),
     storageLoc,
+    imgLat,
+    imgLong
     //random locations //TODO
-    Math.random() * (55.1 - 47.3) + 47.3,
-    Math.random() * (15.0 - 5.9) + 5.9
+    //Math.random() * (55.1 - 47.3) + 47.3,
+    //Math.random() * (15.0 - 5.9) + 5.9
   );
 
   //add new MediaItem into object store

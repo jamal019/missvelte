@@ -6,6 +6,8 @@
     itemTitle,
     itemImage,
     itemStorage,
+    itemLat,
+    itemLong,
     handleAutofocus,
   } from "$lib/mediaStore.js";
 
@@ -19,6 +21,10 @@
 
   //new media img state
   let newImg = $state("");
+
+  //new media lat/long state
+  let lat = $state(0);
+  let long = $state(0);
 
   let setStorage = $state("");
 
@@ -55,6 +61,8 @@
     validator = false;
     newTitle = "";
     newImg = "";
+    lat = 0;
+    long = 0;
     errorMessage = "";
     document.body.classList.remove("no-scroll");
   }
@@ -72,7 +80,7 @@
       handleValidate();
     }
     if (errorMessage === "") {
-      //storage location 
+      //storage location
       const storageTypeElement = document.querySelector(
         'input[name="storage"]:checked'
       ) as HTMLInputElement;
@@ -82,17 +90,22 @@
         handleValidate();
         return;
       }
-      setStorage =  storageTypeElement.value;
+      setStorage = storageTypeElement.value;
       console.log("Storage Location:", setStorage);
 
       itemTitle.set(newTitle);
       itemImage.set(newImg);
       itemStorage.set(setStorage);
 
+      itemLat.set(lat);
+      itemLong.set(long);
+
       addNewItem();
       closeDialog();
       newTitle = "";
       newImg = "";
+      lat = 0;
+      long = 0;
       validator = false;
     }
   }
@@ -154,6 +167,8 @@
         <ImgUpload
           bind:newImg
           bind:newTitle
+          bind:lat
+          bind:long
           reset={() => {
             errorMessage = "";
           }}
