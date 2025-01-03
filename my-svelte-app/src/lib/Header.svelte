@@ -16,6 +16,8 @@
   import Dialog from "./Dialog.svelte";
   import ImgUpload from "./ImgUpload.svelte";
 
+  let { headerTitle, showAddButton, children = () => null } = $props();
+
   //new media title state
   let newTitle = $state("");
 
@@ -127,8 +129,12 @@
 <!--Header-->
 <header class="red-bg">
   <button class="btn menu-icon icon" onclick={toggleMenu}>☰</button>
-  <h1>Media</h1>
-  <button class="btn add-icon icon" onclick={openDialog}>+</button>
+  <h1>{headerTitle}</h1>
+  {#if showAddButton}
+    <button class="btn add-icon icon" onclick={openDialog}>+</button>
+  {:else}
+    {@render children()}
+  {/if}
 </header>
 
 <!--Show Burger Menu-->
@@ -203,10 +209,18 @@
 <style>
   header {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
     padding: 10px;
     height: 5vh;
+    margin-bottom: 2rem;
+  }
+  .menu-icon {
+    transform: scale(1.25) translateX(2px);
+  }
+  .add-icon{
+    margin-left: auto;
+    transform: scale(1.25);
   }
   /* input[type="file"] {
     border: none;

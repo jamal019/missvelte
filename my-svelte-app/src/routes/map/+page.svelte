@@ -8,6 +8,8 @@
 
   import { goto } from "$app/navigation";
 
+  import Header from "$lib/Header.svelte";
+
   let showDialog = $state(false);
   let selectedItem = $state(null);
   let dialogMode = $state("view");
@@ -163,6 +165,7 @@
   });
 </script>
 
+<Header headerTitle="Map" showAddButton={false} />
 <div id="map"></div>
 
 {#if detailsItem}
