@@ -134,7 +134,7 @@
       `;
 
         let customIcon = L.icon({
-          iconUrl: ''
+          iconUrl: "",
         });
 
         const marker = L.marker([item.latitude, item.longitude], {
@@ -165,7 +165,33 @@
   });
 </script>
 
-<Header headerTitle="Map" showAddButton={false} />
+<!-- <Header headerTitle="Map" showAddButton={false}>
+  {#if detailsItem}
+    <button
+      class="btn delete-btn icon"
+      onclick={() => {
+        openDeleteDialog();
+      }}
+    >
+      <img class="delete-icon" src="/delete2.png" alt="delete icon" />
+    </button>
+  {/if}
+</Header> -->
+<Header
+  headerTitle={detailsItem ? selectedItem?.title : "Map"}
+  showAddButton={false}
+>
+  {#if detailsItem}
+    <button
+      class="btn delete-btn icon"
+      onclick={() => {
+        openDeleteDialog();
+      }}
+    >
+      <img class="delete-icon" src="/delete2.png" alt="delete icon" />
+    </button>
+  {/if}
+</Header>
 <div id="map"></div>
 
 {#if detailsItem}
@@ -173,6 +199,7 @@
     imgData={selectedItem}
     {goBack}
     deleteCurrentItem={() => openDeleteDialog()}
+    header={false}
   />
 {/if}
 
@@ -205,5 +232,14 @@
     margin-right: 10px;
     object-fit: cover;
     object-position: center;
+  }
+  .delete-btn {
+    margin-left: auto;
+  }
+  .delete-icon {
+    width: 28px;
+    height: auto;
+    margin-right: 0;
+    transform: translateY(2px);
   }
 </style>

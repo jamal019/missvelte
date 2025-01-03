@@ -13,8 +13,8 @@
   const loadExif = async () => {
     try {
       const tags = await ExifReader.load(newImg, { expanded: true });
-      console.log("Latitude: ", tags.gps.Latitude);
-      console.log("Longitude: ", tags.gps.Longitude);
+      //console.log("Latitude: ", tags.gps.Latitude);
+      //console.log("Longitude: ", tags.gps.Longitude);
       if (tags.gps && tags.gps.Latitude && tags.gps.Longitude) {
         lat = tags.gps.Latitude;
         long = tags.gps.Longitude;

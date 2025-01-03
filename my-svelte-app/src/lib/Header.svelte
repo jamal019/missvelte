@@ -220,7 +220,7 @@
   }
   .add-icon{
     margin-left: auto;
-    transform: scale(1.25);
+    transform: scale(1.5) translateX(-2px);
   }
   /* input[type="file"] {
     border: none;
@@ -236,14 +236,15 @@
   }
   img.preview {
     position: absolute;
-    max-width: 200px;
-    max-height: 200px;
+    max-width: 150px;
+    max-height: 150px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     left: 0;
     right: 0;
     top: 10%;
     bottom: 0;
-    opacity: 0.8;
     margin: auto;
     z-index: 99999;
   }

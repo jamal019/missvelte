@@ -2,20 +2,22 @@
   import { fade } from "svelte/transition";
   import Header from "./Header.svelte";
 
-  let { goBack, deleteCurrentItem, imgData } = $props();
+  let { goBack, deleteCurrentItem, imgData, header=true } = $props();
 </script>
 
-<Header headerTitle={imgData?.title} showAddButton={false}>
-  <button
-    class="btn delete-btn icon"
-    onclick={() => {
-      deleteCurrentItem();
-      //goBack();
-    }}
-  >
-    <img class="delete-icon" src="/delete2.png" alt="delete icon" />
-  </button>
-</Header>
+{#if header}
+  <Header headerTitle={imgData?.title} showAddButton={false}>
+    <button
+      class="btn delete-btn icon"
+      onclick={() => {
+        deleteCurrentItem();
+        //goBack();
+      }}
+    >
+      <img class="delete-icon" src="/delete2.png" alt="delete icon" />
+    </button>
+  </Header>
+{/if}
 
 <div class="details-view" transition:fade={{ duration: 300 }}>
   <!-- <h2>{imgData?.title}</h2> -->
