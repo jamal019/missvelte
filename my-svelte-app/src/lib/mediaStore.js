@@ -13,6 +13,9 @@ export const itemLong = writable(0);
 
 export const itemStorage = writable("");
 
+export const itemFile = writable(null);
+
+
 // export function addNewMedia() {
 //   let titleValue = "";
 //   itemTitle.subscribe((value) => {
@@ -98,7 +101,7 @@ const getAllItems = () => {
 };
 
 //CREATE
-export const addNewItem = () => {
+export const addNewItem = async () => {
   let titleValue = "";
   itemTitle.subscribe((value) => {
     titleValue = value;
@@ -125,11 +128,47 @@ export const addNewItem = () => {
     storageLoc = loc;
   })();
 
+  let finalImageUrl = imgSrcValue;
+
+  if (storageLoc === "remote") {
+    let file;
+    itemFile.subscribe((f) => {
+      file = f;
+    })();
+
+    if (file) {
+      // If file is selected, upload it to the server
+      const formData = new FormData();
+      formData.append("image", file);  // Append the selected file
+
+      try {
+        const response = await fetch("http://localhost:7077/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error("Fehler beim Hochladen der Datei");
+        }
+
+        const data = await response.json();
+        console.log(data);
+        finalImageUrl = `http://localhost:7077/uploads/${data.file.originalname}`;
+      } catch (error) {
+        console.error("Fehler beim Hochladen der Datei:", error);
+        return;  // Exit if there was an error during upload
+      }
+    } else {
+      // If no file is selected, fall back to the image source URL
+      finalImageUrl = imgSrcValue;
+    }
+  }
+
   //create new MediaItem
   //const randomImgId = Math.floor(Math.random() * 1000);
   const newItem = new MediaItem(
     titleValue,
-    imgSrcValue,
+    finalImageUrl,
     //`https://picsum.photos/600/600?random=${randomImgId}`,
     new Date().toLocaleDateString("de-DE"),
     storageLoc,

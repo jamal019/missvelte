@@ -187,11 +187,11 @@
       <fieldset>
         <legend>Storage location:</legend>
         <div>
-          <input type="radio" id="local" name="storage" value="local" />
+          <input type="radio" id="local" name="storage" value="local" bind:group={$itemStorage} />
           <label for="local">Local</label>
         </div>
         <div>
-          <input type="radio" id="remote" name="storage" value="remote" />
+          <input type="radio" id="remote" name="storage" value="remote" bind:group={$itemStorage} />
           <label for="remote">Remote</label>
         </div>
       </fieldset>

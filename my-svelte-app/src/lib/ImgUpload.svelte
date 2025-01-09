@@ -2,6 +2,12 @@
   // @ts-nocheck
   import ExifReader from "exifreader";
 
+
+  import {
+    itemFile
+  } from "$lib/mediaStore.js";
+
+
   let {
     newImg = $bindable(),
     newTitle = $bindable(),
@@ -40,6 +46,7 @@
       reader.onload = async () => {
         newImg = reader.result;
         await loadExif();
+        itemFile.set(file);
       };
       reader.readAsDataURL(file);
       // use filename if title empty
