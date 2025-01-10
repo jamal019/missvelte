@@ -2,7 +2,7 @@
   import { fade } from "svelte/transition";
   import Header from "./Header.svelte";
 
-  let { goBack, deleteCurrentItem, imgData, header=true } = $props();
+  let { goBack, deleteCurrentItem, imgData, header = true } = $props();
 </script>
 
 {#if header}
@@ -22,7 +22,9 @@
 <div class="details-view" transition:fade={{ duration: 300 }}>
   <!-- <h2>{imgData?.title}</h2> -->
   <img src={imgData?.imageUrl} alt="" />
-  <button class="btn back-btn icon" onclick={goBack}>&#8592;</button>
+  <div class="go-back-wrap">
+    <button class="btn back-btn icon" onclick={goBack}>&#8592;</button>
+  </div>
 </div>
 
 <style>
@@ -51,7 +53,7 @@
     padding: 5px 10px;
   } */
   .back-btn {
-    color: #e93f33;
+    color: #fff;
     font-size: 2rem;
     padding-left: 14px;
   }
@@ -61,5 +63,11 @@
   .delete-icon {
     max-width: 28px;
     transform: translateY(2px);
+  }
+  .go-back-wrap {
+    bottom: 0;
+    position: fixed;
+    background: #e93f33;
+    width: 100%;
   }
 </style>
