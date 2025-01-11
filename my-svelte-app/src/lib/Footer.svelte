@@ -1,13 +1,33 @@
 <script>
+// @ts-nocheck
+
   import {refresh} from "$lib/mediaStore.js";
 
   const refreshHandler = () => {
     refresh();
   }
+
+  // function filterItems() {
+  //   const selectElement = document.getElementById('select');
+  //   const selectedValue = selectElement.value;
+
+  //   if (selectedValue === 'all') {
+  //     console.log('Showing all items');
+  //   } else if (selectedValue === 'local') {
+  //     console.log('Showing local items');
+  //   } else if (selectedValue === 'remote') {
+  //     console.log('Showing remote items');
+  //   }
+  // }
 </script>
 
 <footer class="red-bg">
-  <p>© MIS Svelte 2024</p>
+  <!-- <p>© MIS Svelte 2024</p> -->
+   <!-- <select name="Select" id="select" onchange={filterItems}>
+    <option value="all">All</option>
+    <option value="local">Local</option>
+    <option value="remote">Remote</option>
+   </select> -->
   <button class="btn refresh-icon icon" onclick={refreshHandler}>⟳</button>
 </footer>
 
@@ -25,6 +45,7 @@
   }
   button{
     position: absolute;
-    right: 1rem;
+    right: 0.5rem;
+    transform: scale(1.1);
   }
 </style>

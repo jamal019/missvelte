@@ -11,6 +11,7 @@
   import Dialog from "./Dialog.svelte";
   //import Details from "./Details.svelte";
   import ImgUpload from "./ImgUpload.svelte";
+  import Footer from "./Footer.svelte";
   //import type { MediaItem } from "./models/MediaItem";
 
   let showDialog = $state(false);
@@ -157,6 +158,9 @@
     {/if}
   </Dialog>
 {/if}
+
+<Footer />
+
 
 <!--show Details Page/Modal-->
 <!-- {#if detailsItem}
