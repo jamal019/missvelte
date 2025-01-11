@@ -13,6 +13,7 @@
   import ImgUpload from "./ImgUpload.svelte";
   import Footer from "./Footer.svelte";
   //import type { MediaItem } from "./models/MediaItem";
+  import { filterMode } from "$lib/mediaStore.js";
 
   let showDialog = $state(false);
   let selectedItem = $state(null);
@@ -76,16 +77,19 @@
 </script>
 
 <div class="media-list">
-  {#each $items as item, id (id)}
+  {#each $items.filter((item) => {
+    if ($filterMode === "all") return true;
+    return item.storage === $filterMode;
+  }) as item, id (id)}
     <div class="media-item-wrap db_key-{item.id} {item.storage}">
       <a href={item.title} class={`media-item media-item-${id}`}>
         <img src={item.imageUrl} alt={item.title} />
         <div class="media-item-content">
           <h3>
             {#if item.storage === "local"}
-            <span class="badge local-badge"></span>
+              <span class="badge local-badge"></span>
             {:else}
-            <span class="badge remote-badge"></span>
+              <span class="badge remote-badge"></span>
             {/if}
             {item.title}
           </h3>
@@ -98,7 +102,7 @@
             {/if}
           </div> -->
           <!-- <a href={item.id}>Detail</a> -->
-           <!-- <p>{item.latitude} // {item.longitude}</p> -->
+          <!-- <p>{item.latitude} // {item.longitude}</p> -->
         </div>
       </a>
       <button class="btn options-icon icon-red" onclick={() => openDialog(item)}
@@ -161,7 +165,6 @@
 
 <Footer />
 
-
 <!--show Details Page/Modal-->
 <!-- {#if detailsItem}
   <Details
@@ -202,21 +205,21 @@
   .preview-edit {
     margin: 0.5rem 1rem;
   }
-  h3{
+  h3 {
     display: flex;
     align-items: center;
     gap: 10px;
   }
-  .badge{
+  .badge {
     width: 10px;
     height: 10px;
     border-radius: 50%;
     display: inline-block;
   }
-  .local-badge{
+  .local-badge {
     background-color: rgb(50, 172, 50);
   }
-  .remote-badge{
+  .remote-badge {
     background-color: rgb(212, 39, 140);
   }
 </style>

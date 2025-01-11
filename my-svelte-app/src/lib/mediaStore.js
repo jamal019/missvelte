@@ -15,6 +15,8 @@ export const itemStorage = writable("");
 
 export const itemFile = writable(null);
 
+export const filterMode = writable('all'); 
+
 
 // export function addNewMedia() {
 //   let titleValue = "";

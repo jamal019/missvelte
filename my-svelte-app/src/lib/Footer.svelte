@@ -1,11 +1,17 @@
 <script>
-// @ts-nocheck
+  import { refresh, filterMode } from "$lib/mediaStore.js";
 
-  import {refresh} from "$lib/mediaStore.js";
+  function cycleFilter() {
+    filterMode.update((current) => {
+      if (current === "all") return "local";
+      if (current === "local") return "remote";
+      return "all";
+    });
+  }
 
   const refreshHandler = () => {
     refresh();
-  }
+  };
 
   // function filterItems() {
   //   const selectElement = document.getElementById('select');
@@ -23,12 +29,17 @@
 
 <footer class="red-bg">
   <!-- <p>© MIS Svelte 2024</p> -->
-   <!-- <select name="Select" id="select" onchange={filterItems}>
+  <!-- <select name="Select" id="select" onchange={filterItems}>
     <option value="all">All</option>
     <option value="local">Local</option>
     <option value="remote">Remote</option>
    </select> -->
-  <button class="btn refresh-icon icon" onclick={refreshHandler}>⟳</button>
+  <p>© MIS Svelte 2024</p>
+  <button class="btn filter-icon" on:click={cycleFilter}>
+    {$filterMode}
+  </button>
+
+  <button class="btn refresh-icon icon" on:click={refreshHandler}>⟳</button>
 </footer>
 
 <style>
@@ -43,9 +54,13 @@
     width: 100%;
     z-index: 999;
   }
-  button{
+  button {
     position: absolute;
     right: 0.5rem;
     transform: scale(1.1);
+  }
+
+  .filter-icon {
+    right: 3rem;
   }
 </style>

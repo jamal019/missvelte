@@ -256,6 +256,7 @@
   fieldset {
     border: none;
     display: flex;
+    gap: 4px;
   }
   fieldset input {
     margin: 0;
