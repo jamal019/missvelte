@@ -28,18 +28,12 @@
 </script>
 
 <footer class="red-bg">
-  <!-- <p>© MIS Svelte 2024</p> -->
-  <!-- <select name="Select" id="select" onchange={filterItems}>
-    <option value="all">All</option>
-    <option value="local">Local</option>
-    <option value="remote">Remote</option>
-   </select> -->
-  <p>© MIS Svelte 2024</p>
-  <button class="btn filter-icon" on:click={cycleFilter}>
+  <p>© MIS Svelte</p>
+  <button class="btn filter-icon" onclick={cycleFilter}>
     {$filterMode}
   </button>
 
-  <button class="btn refresh-icon icon" on:click={refreshHandler}>⟳</button>
+  <button class="btn refresh-icon icon" onclick={refreshHandler}>⟳</button>
 </footer>
 
 <style>
@@ -62,5 +56,9 @@
 
   .filter-icon {
     right: 3rem;
+    background-color: #fff;
+    color: #e93f33;
+    border-radius: 4px;
+    font-size: 1rem;
   }
 </style>

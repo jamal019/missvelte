@@ -220,6 +220,8 @@
   </Dialog>
 {/if}
 
+<footer></footer>
+
 <style>
   #map {
     height: 75vh;
@@ -241,5 +243,13 @@
     height: auto;
     margin-right: 0;
     transform: translateY(2px);
+  }
+  footer{
+    height: 2.5rem;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: #e93f33;
   }
 </style>
