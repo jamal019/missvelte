@@ -27,8 +27,8 @@
       } else {
         // lat = 0;
         // long = 0;
-        lat = 51.1657; 
-        long = 10.4515;
+        lat = Math.random() * (55.0991 - 47.2701) + 47.2701; 
+        long = Math.random() * (15.0419 - 5.8663) + 5.8663;
       }
     } catch (error) {
       // lat = 0;

@@ -65,6 +65,7 @@
     newImg = "";
     lat = 0;
     long = 0;
+    setStorage = "";
     errorMessage = "";
     document.body.classList.remove("no-scroll");
   }
@@ -187,11 +188,11 @@
       <fieldset>
         <legend>Storage location:</legend>
         <div>
-          <input type="radio" id="local" name="storage" value="local" bind:group={$itemStorage} />
+          <input type="radio" id="local" name="storage" value="local" bind:group={setStorage} />
           <label for="local">Local</label>
         </div>
         <div>
-          <input type="radio" id="remote" name="storage" value="remote" bind:group={$itemStorage} />
+          <input type="radio" id="remote" name="storage" value="remote" bind:group={setStorage} />
           <label for="remote">Remote</label>
         </div>
       </fieldset>
