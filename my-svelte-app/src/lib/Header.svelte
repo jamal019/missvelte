@@ -145,11 +145,20 @@
     transition:slide={{ axis: "x", duration: 300, easing: cubicOut }}
   >
     <div class="menu-wrapper">
-      <h2>Menü</h2>
       <nav>
         <ul>
-          <a href="/"><li>Media</li></a>
-          <a href="/map"><li>Map</li></a>
+          <a href="/">
+            <li>
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff"><path d="M360-400h400L622-580l-92 120-62-80-108 140Zm-40 160q-33 0-56.5-23.5T240-320v-480q0-33 23.5-56.5T320-880h480q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H320Zm0-80h480v-480H320v480ZM160-80q-33 0-56.5-23.5T80-160v-560h80v560h560v80H160Zm160-720v480-480Z"/></svg>
+              <span id="media-page">Medien</span>
+            </li>
+          </a>
+          <a href="/map">
+            <li>
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff"><path d="m600-120-240-84-186 72q-20 8-37-4.5T120-170v-560q0-13 7.5-23t20.5-15l212-72 240 84 186-72q20-8 37 4.5t17 33.5v560q0 13-7.5 23T812-192l-212 72Zm-40-98v-468l-160-56v468l160 56Zm80 0 120-40v-474l-120 46v468Zm-440-10 120-46v-468l-120 40v474Zm440-458v468-468Zm-320-56v468-468Z"/></svg>
+            <span id="map-page">Karte</span>
+          </li>
+        </a>
         </ul>
       </nav>
     </div>
@@ -159,7 +168,7 @@
 <!--show Add New Dialog-->
 {#if showDialog}
   <form onsubmit={handleAddNewMedia}>
-    <Dialog title="New Media" {closeDialog} classname="add-dialog">
+    <Dialog title="Neues Medium" {closeDialog} classname="add-dialog">
       <div class="inputs-wrap">
         <input
           bind:value={newTitle}
@@ -188,22 +197,40 @@
       <fieldset>
         <legend>Storage location:</legend>
         <div>
-          <input type="radio" id="local" name="storage" value="local" bind:group={setStorage} />
+          <input
+            type="radio"
+            id="local"
+            name="storage"
+            value="local"
+            bind:group={setStorage}
+          />
           <label for="local">Local</label>
         </div>
         <div>
-          <input type="radio" id="remote" name="storage" value="remote" bind:group={setStorage} />
+          <input
+            type="radio"
+            id="remote"
+            name="storage"
+            value="remote"
+            bind:group={setStorage}
+          />
           <label for="remote">Remote</label>
         </div>
       </fieldset>
 
-      <button class="btn action-btn btn-add" onclick={handleAddNewMedia}
-        >Add New</button
-      >
+      <img
+        class="preview"
+        src={newImg !== "" ? newImg : "preview.svg"}
+        alt="preview"
+      />
+
+      <div class="btn-pair">
+        <button class="btn action-btn btn-delete" disabled>Löschen</button>
+        <button class="btn action-btn btn-add" onclick={handleAddNewMedia}
+          >Hinzufügen</button
+        >
+      </div>
     </Dialog>
-    {#if newImg != ""}
-      <img class="preview" src={newImg} alt="preview" />
-    {/if}
   </form>
 {/if}
 
@@ -217,11 +244,11 @@
     margin-bottom: 2rem;
   }
   .menu-icon {
-    transform: scale(1.25) translateX(2px);
+    transform: scale(1.25) translateX(4px);
   }
-  .add-icon{
+  .add-icon {
     margin-left: auto;
-    transform: scale(1.5) translateX(-2px);
+    transform: scale(1.5) translateX(-4px);
   }
   /* input[type="file"] {
     border: none;
@@ -236,18 +263,11 @@
     flex: 1;
   }
   img.preview {
-    position: absolute;
-    max-width: 150px;
-    max-height: 150px;
-    width: 100%;
-    height: 100%;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
-    left: 0;
-    right: 0;
-    top: 10%;
-    bottom: 0;
     margin: auto;
-    z-index: 99999;
+    padding: 1rem 0;
   }
   .error {
     color: #e93f33;

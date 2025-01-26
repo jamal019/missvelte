@@ -51,27 +51,17 @@
 
 <!-- Delete Confirmation Dialog -->
 {#if showDialog && dialogMode === "accept-delete"}
-  <Dialog title={selectedItem?.title} {closeDialog} classname="actions-dialog">
-    <img class="prev" src={selectedItem?.imageUrl} alt="preview" />
-    <p class="notice">Are you sure you want to delete?</p>
-    <button class="btn action-btn" onclick={closeDialog}>Cancel</button>
+  <Dialog title="{selectedItem?.title} Löschen" {closeDialog} classname="actions-dialog">
+    <!-- <img class="prev" src={selectedItem?.imageUrl} alt="preview" /> -->
+    <p class="notice">Möchten Sie das Medium {selectedItem?.title} löschen?</p>
+    <button class="btn action-btn" onclick={closeDialog}>Abbrechen</button>
     <button
       class="btn action-btn btn-del"
       onclick={() => {
         deleteMediaItem(selectedItem?.id);
       }}
     >
-      Delete
+      Löschen
     </button>
   </Dialog>
 {/if}
-
-<style>
-  img {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-    object-fit: cover;
-    object-position: center;
-  }
-</style>

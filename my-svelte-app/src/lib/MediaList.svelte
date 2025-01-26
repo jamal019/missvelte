@@ -83,7 +83,7 @@
   }) as item, id (id)}
     <div class="media-item-wrap db_key-{item.id} {item.storage}">
       <a href={item.title} class={`media-item media-item-${id}`}>
-        <img src={item.imageUrl} alt={item.title} />
+        <img class="item-img" src={item.imageUrl} alt={item.title} />
         <div class="media-item-content">
           <h3>
             {#if item.storage === "local"}
@@ -105,8 +105,21 @@
           <!-- <p>{item.latitude} // {item.longitude}</p> -->
         </div>
       </a>
-      <button class="btn options-icon icon-red" onclick={() => openDialog(item)}
-        >⋮</button
+      <!-- svelte-ignore a11y_consider_explicit_label -->
+      <button
+        class="btn options-icon icon-red"
+        onclick={() => openDialog(item)}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24px"
+          viewBox="0 -960 960 960"
+          width="24px"
+          fill="#e93f33"
+          ><path
+            d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"
+          /></svg
+        ></button
       >
     </div>
   {/each}
@@ -114,50 +127,62 @@
 
 <!-- Dynamic Dialog -->
 {#if showDialog}
-  <Dialog title={selectedItem?.title} {closeDialog} classname="actions-dialog">
+  <Dialog
+    title={`${selectedItem?.title} ${dialogMode === "accept-delete" ? "Löschen" : ""}`}
+    {closeDialog}
+    classname="actions-dialog"
+  >
     {#if dialogMode === "view"}
       <!-- Edit or Delete -->
       <button class="btn action-btn btn-edit" onclick={openEditDialog}>
-        Edit
+        Editieren
       </button>
       <button class="btn action-btn btn-del" onclick={openDeleteDialog}>
-        Delete
+        Löschen
       </button>
     {:else if dialogMode === "edit"}
       <!-- Edit Title -->
       {#if selectedItem}
+        <div class="inputs-wrap">
+          <input
+            style="flex: 1"
+            type="text"
+            use:handleAutofocus
+            bind:value={selectedItem.title}
+            placeholder="Edit Title"
+          />
+          <ImgUpload bind:newImg />
+        </div>
         <img
           class="prev"
           src={newImg || selectedItem?.imageUrl}
           alt="preview"
         />
-        <input
-          type="text"
-          use:handleAutofocus
-          bind:value={selectedItem.title}
-          placeholder="Edit Title"
-        />
-        <div class="preview-edit">
-          <ImgUpload bind:newImg />
+        <div class="btn-pair">
+          <button class="btn action-btn btn-del2" onclick={openDeleteDialog}>
+            Löschen
+          </button>
+          <button
+            class="btn action-btn btn-add"
+            onclick={() => {
+              editHandler(selectedItem?.id, selectedItem?.title);
+            }}
+          >
+            Editieren
+          </button>
         </div>
-        <button
-          class="btn action-btn btn-add"
-          onclick={() => {
-            editHandler(selectedItem?.id, selectedItem?.title);
-          }}
-        >
-          Save
-        </button>
       {/if}
     {:else if dialogMode === "accept-delete"}
-      <img class="prev" src={newImg || selectedItem?.imageUrl} alt="preview" />
-      <p class="notice">Are you sure you want to delete?</p>
-      <button class="btn action-btn" onclick={closeDialog}>Cancel</button>
+      <!-- <img class="prev" src={newImg || selectedItem?.imageUrl} alt="preview" /> -->
+      <p class="notice">
+        Möchten Sie das Medium {selectedItem?.title} löschen?
+      </p>
+      <button class="btn action-btn" onclick={closeDialog}>Abbrechen</button>
       <button
         class="btn action-btn btn-del"
         onclick={() => {
           deleteMediaItem(selectedItem?.id);
-        }}>Delete</button
+        }}>Löschen</button
       >
     {/if}
   </Dialog>
@@ -195,7 +220,7 @@
     flex: 1;
     cursor: pointer;
   }
-  img {
+  img.item-img {
     width: 50px;
     height: 50px;
     margin-right: 10px;

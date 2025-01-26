@@ -178,7 +178,7 @@
   {/if}
 </Header> -->
 <Header
-  headerTitle={detailsItem ? selectedItem?.title : "Map"}
+  headerTitle={detailsItem ? selectedItem?.title : "Karte"}
   showAddButton={false}
 >
   {#if detailsItem}
@@ -206,16 +206,16 @@
 <!-- Delete Confirmation Dialog -->
 {#if showDialog && dialogMode === "accept-delete"}
   <Dialog title={selectedItem?.title} {closeDialog} classname="actions-dialog">
-    <img class="prev" src={selectedItem?.imageUrl} alt="preview" />
-    <p class="notice">Are you sure you want to delete?</p>
-    <button class="btn action-btn" onclick={closeDialog}>Cancel</button>
+    <!-- <img class="prev" src={selectedItem?.imageUrl} alt="preview" /> -->
+    <p class="notice">Möchten Sie das Medium {selectedItem?.title} löschen?</p>
+    <button class="btn action-btn" onclick={closeDialog}>Abbrechen</button>
     <button
       class="btn action-btn btn-del"
       onclick={() => {
         deleteMediaItem(selectedItem?.id);
       }}
     >
-      Delete
+      Löschen
     </button>
   </Dialog>
 {/if}

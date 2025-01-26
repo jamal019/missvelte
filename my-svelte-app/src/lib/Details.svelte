@@ -21,7 +21,7 @@
 
 <div class="details-view" transition:fade={{ duration: 300 }}>
   <!-- <h2>{imgData?.title}</h2> -->
-  <img src={imgData?.imageUrl} alt="" />
+  <img class="details-img" src={imgData?.imageUrl} alt="" />
   <div class="go-back-wrap">
     <button class="btn back-btn icon" onclick={goBack}>&#8592;</button>
   </div>
@@ -32,6 +32,9 @@
     width: 100vw;
     max-height: 400px;
     object-fit: cover;
+  }
+  img.details-img{
+    height: 700px;
   }
   /* h2 {
     color: #e93f33;

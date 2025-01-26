@@ -3,5 +3,5 @@
   import MediaList from "$lib/MediaList.svelte";
 </script>
 
-<Header headerTitle="Media" showAddButton={true}></Header>
+<Header headerTitle="Medien" showAddButton={true}></Header>
 <MediaList />
