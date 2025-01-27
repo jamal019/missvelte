@@ -75,11 +75,11 @@
     errorMessage = "";
 
     if (newTitle.trim() === "") {
-      errorMessage += "Title is empty. ";
+      errorMessage += "Titel ist leer. ";
       handleValidate();
     }
     if (newImg.trim() === "") {
-      errorMessage += "No image chosen. ";
+      errorMessage += "Kein Bild wurde ausgewählt. ";
       handleValidate();
     }
     if (errorMessage === "") {
@@ -271,8 +271,8 @@
   }
   .error {
     color: #e93f33;
-    text-align: center;
-    padding: 0.5rem 0;
+    padding: 0.5rem 2rem;
+    font-size: 0.8rem;
   }
   fieldset {
     border: none;
