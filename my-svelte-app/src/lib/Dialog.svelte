@@ -49,7 +49,6 @@
     left: 0;
     right: 0;
     margin: auto;
-    border-radius: 6px;
     background-color: #fff;
     top: 0; /*10vh*/
     bottom: 0;
