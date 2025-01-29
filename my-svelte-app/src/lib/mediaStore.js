@@ -221,7 +221,7 @@ export const deleteItem = (id) => {
 };
 
 //EDIT
-export const editItem = (id, newTitle, newImage) => {
+export const editItem = async (id, newTitle, newImage) => {
   if (!id) {
     console.error("Invalid ID:", id);
     return;
@@ -231,39 +231,85 @@ export const editItem = (id, newTitle, newImage) => {
     return;
   }
 
-  //edit MediaItem title
-  const transaction = db.transaction("mediaItems", "readwrite");
+  // IndexedDB-Transaktion für das Abrufen des Items
+  const transaction = db.transaction("mediaItems", "readonly");
   const objStore = transaction.objectStore("mediaItems");
-  //get item by id
   const req = objStore.get(id);
 
-  req.onsuccess = () => {
-    //change item's title and put into store
+  req.onsuccess = async () => {
     const item = req.result;
-    if (item) {
-      item.title = newTitle;
+    if (!item) {
+      console.error("Item not found");
+      return;
+    }
+
+    item.title = newTitle;
+
+    let file;
+    itemFile.subscribe((f) => {
+      file = f;
+    })();
+
+    // Falls das Bild geändert wurde und der storage "remote" ist
+    if (item.storage === "remote" && file) {
+      try {
+        const formData = new FormData();
+        formData.append("image", file); // Datei anfügen
+        const response = await fetch("http://localhost:7077/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error("Fehler beim Hochladen der Datei");
+        }
+
+        const data = await response.json();
+        console.log("Upload erfolgreich:", data);
+
+        // Setze die neue Bild-URL
+        item.imageUrl = `http://localhost:7077/uploads/${data.file.filename}`;
+      } catch (error) {
+        console.error("Fehler beim Hochladen des Bildes:", error);
+        return; // Abbrechen, wenn das Hochladen fehlschlägt
+      }
+    } else if (newImage) {
+      // Falls der Storage lokal ist, einfach die URL setzen
       item.imageUrl = newImage;
     }
-    objStore.put(item);
 
-    //update svelte items writable store
-    items.update((currentItems) => {
-      const index = currentItems.findIndex((i) => i.id === id);
-      if (index !== -1) {
-        currentItems[index] = {
-          ...currentItems[index],
-          title: newTitle,
-          imageUrl: newImage,
-        };
-      }
-      return currentItems;
-    });
+    // **NEUE TRANSAKTION** für das Speichern in IndexedDB
+    const writeTransaction = db.transaction("mediaItems", "readwrite");
+    const writeObjStore = writeTransaction.objectStore("mediaItems");
+    writeObjStore.put(item);
+
+    writeTransaction.oncomplete = () => {
+      console.log("Item erfolgreich in IndexedDB aktualisiert");
+
+      // Aktualisiere den Svelte Store
+      items.update((currentItems) => {
+        const index = currentItems.findIndex((i) => i.id === id);
+        if (index !== -1) {
+          currentItems[index] = {
+            ...currentItems[index],
+            title: newTitle,
+            imageUrl: item.imageUrl, // Aktualisierte URL setzen
+          };
+        }
+        return currentItems;
+      });
+    };
+
+    writeTransaction.onerror = (err) => {
+      console.error("Fehler beim Speichern in IndexedDB:", err);
+    };
   };
-  //Error
+
   req.onerror = (err) => {
-    console.error("Error editing item", err);
+    console.error("Error retrieving item from IndexedDB", err);
   };
 };
+
 
 //REFRESH
 export const refresh = () => {

@@ -47,7 +47,7 @@
     background-color: white;
     top: 7.4vh;
     width: 100vw;
-    height: 80vh;
+    height: 86vh;
     z-index: 999;
   }
   /* .action-btns {
