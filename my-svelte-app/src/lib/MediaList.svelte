@@ -48,7 +48,11 @@
   function editHandler(id, newTitle) {
     console.log("EDITED:", selectedItem?.title, id);
     const imageToSave = newImg || selectedItem?.imageUrl;
-    editItem(id, newTitle, imageToSave);
+    if (newTitle === "") {
+      editItem(id, "Medium", imageToSave);
+    } else {
+      editItem(id, newTitle, imageToSave);
+    }
     closeDialog();
   }
 
@@ -175,7 +179,7 @@
     {:else if dialogMode === "accept-delete"}
       <!-- <img class="prev" src={newImg || selectedItem?.imageUrl} alt="preview" /> -->
       <p class="notice">
-        Möchten Sie das Medium {selectedItem?.title} löschen?
+        Möchten Sie das Medium '{selectedItem?.title}' löschen?
       </p>
       <button class="btn action-btn" onclick={closeDialog}>Abbrechen</button>
       <button

@@ -28,8 +28,13 @@
 </script>
 
 <footer class="red-bg">
-  <p>© MIS Svelte</p>
+  <p id="name">© MIS Svelte</p>
   <button class="btn filter-icon" onclick={cycleFilter}>
+    {#if $filterMode === "local"}
+      <span class="badge local-badge"></span>
+    {:else if $filterMode === "remote"}
+      <span class="badge remote-badge"></span>
+    {/if}
     {$filterMode}
   </button>
 
@@ -40,7 +45,7 @@
   footer {
     height: 2.5rem;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     position: fixed;
     left: 0;
@@ -53,12 +58,26 @@
     right: 0.5rem;
     transform: scale(1.1);
   }
-
+  #name{
+    padding-left: 10px;
+  }
   .filter-icon {
     right: 3rem;
     background-color: #fff;
     color: #e93f33;
     border-radius: 4px;
     font-size: 1rem;
+  }
+  .badge {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .local-badge {
+    background-color: rgb(50, 172, 50);
+  }
+  .remote-badge {
+    background-color: rgb(212, 39, 140);
   }
 </style>
